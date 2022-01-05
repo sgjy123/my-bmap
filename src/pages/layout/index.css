@@ -1,0 +1,49 @@
+@charset "UTF-8";
+/* @describe: layout
+ * @author: 上官靖宇
+ * @date: 2022/1/5 10:41
+ */
+.layout {
+    min-height: 100vh !important;
+}
+
+.layout .logo {
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    overflow: hidden;
+}
+
+.layout .logo .logo-img {
+    width: auto;
+    height: 65%;
+}
+
+.layout .logo.logo-small .logo-img {
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+.layout .site-layout .site-layout-background {
+    background: #fff;
+}
+
+.layout .site-layout .operation {
+    padding: 0 10px;
+}
+
+.layout .site-layout .operation .trigger {
+    padding: 0 16px;
+    font-size: 18px;
+    line-height: 64px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.layout .site-layout .operation .trigger:hover {
+    color: #1890ff;
+}

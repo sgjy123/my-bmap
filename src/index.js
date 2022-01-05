@@ -1,17 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {HashRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
+// 导入入口样式
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+// 导入路由
+import routes from 'routes/home';
+// 导入css浏览器reset
+import "normalize.css";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <Router>
+        <Switch>
+            {
+                routes.map((route) => {
+                    return route.Redirect ? <Redirect {...route}/> : <Route {...route}/>
+                })
+            }
+        </Switch>
+    </Router>,
+    document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
