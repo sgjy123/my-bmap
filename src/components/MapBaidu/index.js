@@ -18,6 +18,8 @@ import CustomOverlayMap from './CustomOverlayMap';
 import InfoWindowMap from './InfoWindowMap';
 // 覆盖物-文本标注
 import LabelMap from './LabelMap';
+// 覆盖物-点标注
+import MarkerMap from './MarkerMap';
 
 export {
     CreateMap,
