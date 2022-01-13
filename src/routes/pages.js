@@ -1,5 +1,6 @@
 // 导入页面路由
 import Map from 'pages/map';
+import Page1 from 'pages/map/children/page1';
 import Table from 'pages/table';
 import React from "react";
 import {
@@ -13,7 +14,15 @@ const routes = [
         key: '/layout/map',
         name: "地图基础",
         icon: <HeatMapOutlined/>,
-        component: Map
+        component: Map,
+        children: [
+            {
+                path: '/layout/map/page1',
+                key: '/layout/map/page1',
+                name: "创建地图",
+                component: Page1,
+            }
+        ]
     },
     {
         path: '/layout/table',

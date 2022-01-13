@@ -1,12 +1,8 @@
-import React from 'react';
-import {useState} from "react";
-import {Switch, Route, useLocation, useHistory} from 'react-router-dom';
+import React, {useState} from 'react';
+import {Route, Switch, useHistory, useLocation} from 'react-router-dom';
 // 组件
 import {Layout, Menu} from 'antd';
-import {
-    MenuUnfoldOutlined,
-    MenuFoldOutlined
-} from '@ant-design/icons';
+import {MenuFoldOutlined, MenuUnfoldOutlined} from '@ant-design/icons';
 // 配置
 import routes from 'routes/pages';
 // 样式
@@ -16,6 +12,7 @@ import logo from 'assets/images/logox1.png';
 import logoSmall from 'assets/images/logo-small.png';
 
 const {Sider, Content, Header} = Layout;
+const {SubMenu} = Menu;
 
 function ALayout(props) {
     const location = useLocation();
@@ -51,7 +48,16 @@ function ALayout(props) {
                     {
                         routes.map((nav) => {
                             return (
-                                <Menu.Item key={nav.key} icon={nav.icon}>{nav.name}</Menu.Item>
+                                nav.children ?
+                                    <SubMenu key={nav.key} icon={nav.icon} title={nav.name}>
+                                        {
+                                            nav.children &&
+                                            nav.children.map((child) => (
+                                                <Menu.Item key={child.key}>{child.name}</Menu.Item>
+                                            ))
+                                        }
+                                    </SubMenu> :
+                                    (<Menu.Item key={nav.key} icon={nav.icon}>{nav.name}</Menu.Item>)
                             )
                         })
                     }
@@ -75,7 +81,11 @@ function ALayout(props) {
                     <Switch>
                         {
                             routes.map((route) => {
-                                return <Route {...route}/>
+                                return route.children ? (
+                                    route.children.map((childRoute) => {
+                                        return (<Route {...childRoute}/>)
+                                    })
+                                ) : (<Route {...route}/>)
                             })
                         }
                     </Switch>
