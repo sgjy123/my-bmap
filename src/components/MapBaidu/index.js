@@ -9,7 +9,7 @@ import ScaleControlMap from './ScaleControlMap';
 // 地图控件-缩放控件
 import ZoomControlMap from './ScaleControlMap';
 // 覆盖物-多边形
-import CircleMap from './CircleMap';
+// import CircleMap from './CircleMap';
 // 覆盖物-多边形
 import PolygonMap from './PolygonMap';
 // 覆盖物-自定义覆盖物
@@ -28,8 +28,9 @@ export {
     NavigationControlMap,
     ScaleControlMap,
     ZoomControlMap,
-    CircleMap,
+    // CircleMap,
     CustomOverlayMap,
     InfoWindowMap,
     LabelMap,
+    MarkerMap
 };

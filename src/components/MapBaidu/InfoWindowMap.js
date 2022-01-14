@@ -3,7 +3,6 @@ import InfoWindow from 'react-bmapgl/Overlay/InfoWindow';
 import PropTypes from 'prop-types';
 const {BMapGL} = window;
 InfoWindowMap.propTypes = {
-    position: PropTypes.object.isRequired, // 信息窗口的坐标
     enableMassClear: PropTypes.bool, // 是否在调用Map.clearOverlays()时清除此覆盖物
     height: PropTypes.number, // 信息窗口高度
     offset: PropTypes.number, // 信息窗口的像素偏移
@@ -18,6 +17,7 @@ InfoWindowMap.defaultProps = {
 function InfoWindowMap(props) {
     const {
         map,
+        position,
         enableMassClear,
         height,
         offset,
@@ -28,6 +28,7 @@ function InfoWindowMap(props) {
     } = props;
     return (
         <InfoWindow map={map}
+                    position={position}
                     enableMassClear={enableMassClear}
                     height={height}
                     offset={offset}

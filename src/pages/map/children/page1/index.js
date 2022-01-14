@@ -5,7 +5,9 @@ import {
     PolygonMap,
     ScaleControlMap,
     TypeControlMap,
-    ZoomControlMap
+    ZoomControlMap,
+    LabelMap,
+    InfoWindowMap
 } from 'components/MapBaidu';
 // 导入样式
 import './index.css';
@@ -38,6 +40,10 @@ function MapPage1(props) {
                 new BMapGL.Point(116.40, 39.92),
                 new BMapGL.Point(116.33, 40.01),
             ]}/>
+            <LabelMap text="我是一个label"/>
+            <InfoWindowMap position={new BMapGL.Point(116.40, 39.91)}
+                           title="标题"
+                           text="快速文本信息窗口"/>
         </CreateMap>
     )
 }

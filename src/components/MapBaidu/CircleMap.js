@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import Circle from 'react-bmapgl/Overlay/Circle'
 
 const {BMapGL} = window;
-const centerPoint = new BMapGL.point(116.404449, 39.914889);
 CircleMap.propTypes = {
-    center: PropTypes.array.isRequired, // 圆形的坐标数组
     radius: PropTypes.number.isRequired, // 圆形的半径，单位为米
     autoViewport: PropTypes.bool, // 自动聚焦视野
     enableEditing: PropTypes.bool, // 开启可编辑模式
@@ -19,7 +17,7 @@ CircleMap.propTypes = {
     viewportOptions: PropTypes.object, // autoViewport打开时生效，配置视野的参数
 }
 CircleMap.defaultProps = {
-    center: centerPoint,
+    center: new BMapGL.point(116.404449, 39.914889),
     radius: 10
 }
 
