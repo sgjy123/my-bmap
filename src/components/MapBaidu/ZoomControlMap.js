@@ -12,7 +12,7 @@ ZoomControlMap.propTypes = {
     anchor: PropTypes.number
 }
 ZoomControlMap.defaultProps = {
-    anchor: 0
+    // anchor: 0
 }
 function ZoomControlMap(props) {
     const {

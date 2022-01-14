@@ -1,7 +1,6 @@
 import React from 'react';
 import ScaleControl from 'react-bmapgl/Control/ScaleControl';
 import PropTypes from 'prop-types';
-import NavigationControlMap from "./NavigationControlMap";
 ScaleControlMap.propTypes = {
     /**
      * 控件的位置，可传下面4个参数：

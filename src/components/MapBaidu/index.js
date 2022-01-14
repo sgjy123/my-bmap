@@ -7,7 +7,7 @@ import NavigationControlMap from './NavigationControlMap';
 // 地图控件-地图类型控件
 import ScaleControlMap from './ScaleControlMap';
 // 地图控件-缩放控件
-import ZoomControlMap from './ScaleControlMap';
+import ZoomControlMap from './ZoomControlMap';
 // 覆盖物-多边形
 import CircleMap from './CircleMap';
 // 覆盖物-多边形
