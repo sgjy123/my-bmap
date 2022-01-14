@@ -7,8 +7,11 @@ import {
     TypeControlMap,
     ZoomControlMap,
     LabelMap,
-    InfoWindowMap
+    CircleMap,
+    InfoWindowMap,
+    MarkerMap
 } from 'components/MapBaidu';
+import ICON from 'assets/images/cc-pointer-left.png';
 // 导入样式
 import './index.css';
 
@@ -44,6 +47,8 @@ function MapPage1(props) {
             <InfoWindowMap position={new BMapGL.Point(116.40, 39.91)}
                            title="标题"
                            text="快速文本信息窗口"/>
+            <CircleMap radius={5000}/>
+            <MarkerMap icon={ new BMapGL.Icon(ICON, new BMapGL.Size(52, 26))}/>
         </CreateMap>
     )
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import Marker from 'react-bmapgl/Overlay/Marker';
 import PropTypes from 'prop-types';
-
 const {BMapGL} = window;
 MarkerMap.propTypes = {
     position: PropTypes.object.isRequired, // 标注点的坐标
@@ -12,7 +11,8 @@ MarkerMap.propTypes = {
     offset: PropTypes.number, // 标注的像素偏移
 }
 MarkerMap.defaultProps = {
-    position: new BMapGL.Point(116.35, 39.88)
+    position: new BMapGL.Point(116.35, 39.88),
+    icon: 'loc_blue'
 }
 
 function MarkerMap(props) {

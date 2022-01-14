@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组</title>
+    <g id="切图" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="编组">
+            <circle id="椭圆形" fill="#038BFE" opacity="0.3" cx="15" cy="15" r="15"></circle>
+            <circle id="椭圆形" fill="#A8E8FF" cx="15" cy="15" r="7"></circle>
+        </g>
+    </g>
+</svg>

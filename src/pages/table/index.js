@@ -1,6 +1,10 @@
+import ICON from 'assets/images/cc-pointer-left.png';
+
 function tableBasics() {
     return (
-        <div>222</div>
+        <div>
+            <img src={ICON} alt=""/>
+        </div>
     )
 }
 export default tableBasics;

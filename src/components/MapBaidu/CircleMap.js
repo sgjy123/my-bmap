@@ -17,7 +17,7 @@ CircleMap.propTypes = {
     viewportOptions: PropTypes.object, // autoViewport打开时生效，配置视野的参数
 }
 CircleMap.defaultProps = {
-    center: new BMapGL.point(116.404449, 39.914889),
+    center: new BMapGL.Point(116.40, 39.91),
     radius: 10
 }
 
