@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Route, Switch, useHistory, useLocation} from 'react-router-dom';
 // 组件
 import {Layout, Menu} from 'antd';
@@ -19,6 +19,9 @@ function ALayout(props) {
     const history = useHistory();
     const [collapsed, setCollapsed] = useState(false);
     const [currentNav, setCurrentNav] = useState(getUrl());
+
+    useEffect(()=>{
+    },[]);
 
     function toggle() {
         setCollapsed(!collapsed);

@@ -34,8 +34,8 @@ function MapPage1(props) {
                 {'styleId': "761ab2a918865d27dbbfe815abc87233"}
             }
         >
-            {/*<TypeControlMap anchor={1}/>*/}
-            {/*<NavigationControlMap anchor={1}/>*/}
+            <TypeControlMap anchor={1}/>
+            <NavigationControlMap anchor={1}/>
             {/*<ScaleControlMap anchor={2}/>*/}
             {/*<ZoomControlMap/>*/}
             {/*<PolygonMap path={[*/}

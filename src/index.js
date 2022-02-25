@@ -13,7 +13,7 @@ ReactDOM.render(
         <Switch>
             {
                 routes.map((route) => {
-                    return route.Redirect ? <Redirect {...route}/> : <Route {...route}/>
+                    return route.redirect ? <Redirect {...route}/> : <Route {...route}/>
                 })
             }
         </Switch>
