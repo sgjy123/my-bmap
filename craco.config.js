@@ -8,6 +8,7 @@ module.exports = {
             "routes": addPath("src/routes"),
             "pages": addPath("src/pages"),
             "assets": addPath("src/assets"),
+            "service": addPath("src/service"),
         }
     },
 }

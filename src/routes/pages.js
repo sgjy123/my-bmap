@@ -2,14 +2,14 @@
 import Map from 'pages/map';
 import Page1 from 'pages/map/children/page1';
 import Table from 'pages/table';
+import Contract from 'pages/contract';
 import React from "react";
 import {
-    HeatMapOutlined,
-    TableOutlined
+    UnorderedListOutlined
 } from '@ant-design/icons';
 
 const routes = [
-    {
+    /*{
         path: '/layout/map',
         key: '/layout/map',
         name: "地图基础",
@@ -30,6 +30,13 @@ const routes = [
         name: "表格基础",
         icon: <TableOutlined />,
         component: Table
+    },*/
+    {
+        path: '/layout/contract',
+        key: '/layout/contract',
+        name: "合同编号",
+        icon: <UnorderedListOutlined />,
+        component: Contract
     },
 ];
 export default routes;

@@ -1,14 +1,27 @@
 import React from "react";
-
-import {Button, Form, Input} from 'antd';
+import { useHistory } from 'react-router-dom';
+import {Button, Form, Input, message} from 'antd';
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
 
 import './index.css';
 import imgAiWrap from 'assets/images/login/aiwrap.png';
+import {loginUrl} from 'service/api/login';
 
 function Login() {
-    const onFinish = (values) => {
-        console.log('Received values of form: ', values);
+    const history = useHistory();
+    const onFinish = ({username, password}) => {
+        loginUrl({
+            username,
+            password
+        }).then(({code,data,msg})=>{
+            if (code === 200) {
+                message.success('登录成功');
+                window.localStorage.setItem('username',data.username);
+                history.push('/layout/contract');
+            } else {
+                message.error(msg);
+            }
+        });
     };
     return (
         <div className='login'>

@@ -28,8 +28,19 @@
     border-radius: 4px;
 }
 
+.layout .logo .txt {
+    font-weight: 500;
+    font-size: 16px;
+}
+
 .layout .site-layout .site-layout-background {
     background: #fff;
+}
+.layout .site-layout .site-layout-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 15px !important;
 }
 
 .layout .site-layout .operation {
@@ -46,4 +57,19 @@
 
 .layout .site-layout .operation .trigger:hover {
     color: #1890ff;
+}
+
+.layout .site-layout .user {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.layout .site-layout .user .user-name {
+    height: 25px;
+    line-height: 25px;
+    padding: 0 15px;
+    margin-left: 20px;
+    color: #ffffff;
+    background-color: #ccc;
+    border-radius: 2px;
 }

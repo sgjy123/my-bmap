@@ -9,6 +9,7 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "antd": "^4.18.2",
+    "axios": "^0.26.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.0",
     "babel-loader": "8.1.0",
@@ -61,5 +62,6 @@
     "presets": [
       "react-app"
     ]
-  }
+  },
+  "proxy": "http://124.71.84.218:8881"
 }
