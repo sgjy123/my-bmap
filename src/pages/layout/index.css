@@ -39,6 +39,7 @@
 .layout .site-layout .site-layout-header {
     display: flex;
     align-items: center;
+    height: 50px;
     justify-content: space-between;
     padding-right: 15px !important;
 }

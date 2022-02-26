@@ -1,0 +1,22 @@
+@charset "UTF-8";
+/* @describe: 合同服务
+ * @author: 上官靖宇
+ * @date: 2022/2/26 21:05
+ */
+.contract .contract-search {
+    margin: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+.contract .contract-search .contract-search-btn {
+    text-align: right;
+}
+
+.contract .contract-table {
+    margin: 10px;
+    padding-top: 15px;
+}
+.contract .contract-page {
+    margin: 10px;
+    padding-top: 15px;
+}

@@ -34,7 +34,7 @@ const routes = [
     {
         path: '/layout/contract',
         key: '/layout/contract',
-        name: "合同编号",
+        name: "合约业务服务",
         icon: <UnorderedListOutlined />,
         component: Contract
     },
