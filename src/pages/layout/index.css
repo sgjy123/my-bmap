@@ -74,3 +74,9 @@
     background-color: #ccc;
     border-radius: 2px;
 }
+.layout .ant-layout-sider {
+    background-color: #14578B;
+}
+.ant-menu.ant-menu-dark, .ant-menu-dark .ant-menu-sub, .ant-menu.ant-menu-dark .ant-menu-sub {
+    background-color: #14578B;
+}

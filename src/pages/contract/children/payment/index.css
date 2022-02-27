@@ -3,6 +3,11 @@
  * @author: 上官靖宇
  * @date: 2022/2/27 12:45
  */
+.contract-search {
+    margin: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
 .contract-page {
     padding-top: 15px;
 }

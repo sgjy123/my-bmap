@@ -1,9 +1,10 @@
-import {ConfigProvider, message, Modal, Pagination, Table} from "antd";
+import {Button, ConfigProvider, Form, Input, message, Modal, Pagination, Select, Table} from "antd";
 import React, {useEffect, useState} from "react";
 import zh_CN from "antd/es/locale/zh_CN";
 import {columnsOpt} from "./options";
 import {paymentListUrl} from 'service/api/payment';
 import './index.css';
+import {SearchOutlined} from "@ant-design/icons";
 
 function Payment(props) {
     const {title, visible, setVisible, width, code} = props;
@@ -13,14 +14,15 @@ function Payment(props) {
     const [searchParam, setSearchParam] = useState({
         "page_num": 1,
         "page_size": 10,
-        "contract_code": code
+        "contract_code": code,
+        "payment_type": ''
     })
     const [contractData, setContract] = useState([]);
     const [total, setTotal] = useState(0);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         getData();
-    }, []);
+    }, [searchParam]);
     const closeModal = (flag) => {
         setVisible(flag);
     }
@@ -51,6 +53,20 @@ function Payment(props) {
     const changeLoading = (flag) => {
         setLoading(flag);
     }
+    const queryTable = (values)=>{
+        changeLoading(true);
+        const {paymentType} = values;
+        setSearchParam({
+            ...searchParam,
+            'payment_type': paymentType,
+        });
+    }
+    const handleChange = (values) =>{
+        setSearchParam({
+            ...searchParam,
+            'payment_type': values,
+        });
+    }
     return (
         <Modal
             visible={visible}
@@ -67,6 +83,28 @@ function Payment(props) {
             onCancel={() => closeModal(false)}
             destroyOnClose={true}
         >
+            <div className="contract-search">
+                <Form name="horizontal_login"
+                      layout="inline"
+                      onFinish={queryTable}>
+                    <Form.Item name="paymentType" label="合同编号：">
+                        <Select allowClear
+                                defaultValue={searchParam.payment_type}
+                                style={{ width: 150 }}
+                                onChange={handleChange}>
+                            <Select.Option value={1}>预付款</Select.Option>
+                            <Select.Option value={2}>入成品库款</Select.Option>
+                            <Select.Option value={3}>到货款</Select.Option>
+                            <Select.Option value={4}>质保金</Select.Option>
+                        </Select>
+                    </Form.Item>
+                    <Form.Item>
+                        <Button type="primary"
+                                icon={<SearchOutlined/>}
+                                htmlType="submit">查询</Button>
+                    </Form.Item>
+                </Form>
+            </div>
             <div className="contract-table">
                 <Table loading={loading} scroll={{x: 1300}} columns={columns} dataSource={contractData}
                        pagination={false}/>

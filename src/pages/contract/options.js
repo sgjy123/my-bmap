@@ -29,7 +29,7 @@ const columnsOpt = [
         title: '甲方联系人姓名',
         key: 'contacts_name',
         dataIndex: 'contacts_name',
-        width: 80,
+        width: 100,
         align: 'center',
         ellipsis: true
     },
@@ -37,6 +37,7 @@ const columnsOpt = [
         title: '项目编号',
         key: 'project_code',
         dataIndex: 'project_code',
+        width: 120,
         align: 'center',
         ellipsis: true
     },

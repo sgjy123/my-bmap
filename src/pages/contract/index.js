@@ -29,30 +29,30 @@ function Contract() {
             fixed: 'right',
             title: '操作',
             align: 'center',
-            width: 300,
+            width: 500,
             render: (text, record) => (
                 <div>
-                    <Button type='primary' style={{'marginRight': '2px','marginBottom': '2px'}} onClick={() => {
+                    <Button type='primary' size="small" style={{'marginRight': '2px','marginBottom': '2px'}} onClick={() => {
                         material(record)
-                    }}>物资明细</Button>
-                    <Button type='primary' style={{'marginRight': '2px','marginBottom': '2px'}} onClick={() => {
+                    }}>物资</Button>
+                    <Button type='primary' size="small" style={{'marginRight': '2px','marginBottom': '2px'}} onClick={() => {
                         scheduling(record)
                     }}>排产资料</Button>
-                    <Button type='primary' style={{'marginRight': '2px','marginBottom': '2px'}} onClick={() => {
+                    <Button type='primary' size="small" style={{'marginRight': '2px','marginBottom': '2px'}} onClick={() => {
                         schedulingPlan(record)
                     }}>排产计划</Button>
-                    <Button type='primary' style={{'marginRight': '2px','marginBottom': '2px'}} onClick={() => {
+                    <Button type='primary' size="small" style={{'marginRight': '2px','marginBottom': '2px'}} onClick={() => {
                         supplier(record)
-                    }}>供应商成品库</Button>
-                    <Button type='primary' style={{'marginRight': '2px','marginBottom': '2px'}} onClick={() => {
+                    }}>成品库</Button>
+                    <Button type='primary' size="small" style={{'marginRight': '2px','marginBottom': '2px'}} onClick={() => {
                         distribution(record)
                     }}>配送单</Button>
-                    <Button type='primary' style={{'marginRight': '2px','marginBottom': '2px'}} onClick={() => {
+                    <Button type='primary' size="small" style={{'marginRight': '2px','marginBottom': '2px'}} onClick={() => {
                         warehousingOrder(record)
-                    }}>合同入库单</Button>
-                    <Button type='primary' style={{'marginRight': '2px','marginBottom': '2px'}} onClick={() => {
+                    }}>入库单</Button>
+                    <Button type='primary' size="small" style={{'marginRight': '2px','marginBottom': '2px'}} onClick={() => {
                         payment(record)
-                    }}>合同款项</Button>
+                    }}>款项</Button>
                 </div>
             )
         },
