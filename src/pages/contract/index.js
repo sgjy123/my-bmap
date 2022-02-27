@@ -9,12 +9,14 @@ import Material from './children/material';
 import Scheduling from './children/scheduling';
 import Plan from './children/plan';
 import Supplier from './children/supplier';
+import Distribution from './children/distribution';
 
 function Contract() {
     const [visible, setVisible] = useState(false);
     const [schedulingVisible, setSchedulingVisible] = useState(false);
     const [planVisible, setPlanVisible] = useState(false);
     const [supplierVisible, setSupplierVisible] = useState(false);
+    const [distributionVisible, setDistributionVisible] = useState(false);
     const [title, setTitle] = useState('');
     const [code, setCode] = useState(null);
     const [columns, setColumns] = useState([
@@ -35,9 +37,12 @@ function Contract() {
                     <Button type='primary' style={{'marginRight': '2px'}} onClick={() => {
                         schedulingPlan(record)
                     }}>排产计划</Button>
-                    <Button type='primary' onClick={() => {
+                    <Button type='primary' style={{'marginRight': '2px'}} onClick={() => {
                         supplier(record)
                     }}>供应商成品库</Button>
+                    <Button type='primary' onClick={() => {
+                        distribution(record)
+                    }}>配送单</Button>
                 </div>
             )
         },
@@ -115,6 +120,12 @@ function Contract() {
         setSupplierVisible(true);
     }
 
+    const distribution = (data)=>{
+        setCode(data['contract_code']);
+        setTitle('合同配送单');
+        setDistributionVisible(true);
+    }
+
     return (
         <div className="contract">
             <div className="contract-search">
@@ -181,6 +192,15 @@ function Contract() {
                           setVisible={setSupplierVisible}
                           code={code}
                           width={1500}/>
+                )
+            }
+            {
+                distributionVisible && (
+                    <Distribution title={title}
+                              visible={distributionVisible}
+                              setVisible={setDistributionVisible}
+                              code={code}
+                              width={1500}/>
                 )
             }
         </div>
