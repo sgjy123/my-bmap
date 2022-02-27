@@ -11,6 +11,7 @@ import Plan from './children/plan';
 import Supplier from './children/supplier';
 import Distribution from './children/distribution';
 import WarehousingOrder from './children/warehousingOrder';
+import Payment from './children/payment';
 
 function Contract() {
     const [visible, setVisible] = useState(false);
@@ -19,6 +20,7 @@ function Contract() {
     const [supplierVisible, setSupplierVisible] = useState(false);
     const [distributionVisible, setDistributionVisible] = useState(false);
     const [warehousingOrderVisible, setWarehousingOrderVisible] = useState(false);
+    const [paymentVisible, setPaymentVisible] = useState(false);
     const [title, setTitle] = useState('');
     const [code, setCode] = useState(null);
     const [columns, setColumns] = useState([
@@ -48,6 +50,9 @@ function Contract() {
                     <Button type='primary' style={{'marginRight': '2px','marginBottom': '2px'}} onClick={() => {
                         warehousingOrder(record)
                     }}>合同入库单</Button>
+                    <Button type='primary' style={{'marginRight': '2px','marginBottom': '2px'}} onClick={() => {
+                        payment(record)
+                    }}>合同款项</Button>
                 </div>
             )
         },
@@ -137,6 +142,12 @@ function Contract() {
         setWarehousingOrderVisible(true);
     }
 
+    const payment = (data)=>{
+        setCode(data['contract_code']);
+        setTitle('合同款项');
+        setPaymentVisible(true);
+    }
+
     return (
         <div className="contract">
             <div className="contract-search">
@@ -221,6 +232,15 @@ function Contract() {
                                   setVisible={setWarehousingOrderVisible}
                                   code={code}
                                   width={1500}/>
+                )
+            }
+            {
+                paymentVisible && (
+                    <Payment title={title}
+                                      visible={paymentVisible}
+                                      setVisible={setPaymentVisible}
+                                      code={code}
+                                      width={1500}/>
                 )
             }
         </div>
