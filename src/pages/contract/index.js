@@ -6,9 +6,11 @@ import './index.css';
 import {contractListUrl} from 'service/api/contract';
 import {columnsOpt} from './options';
 import Material from './children/material';
+import Scheduling from './children/scheduling';
 
 function Contract() {
     const [visible, setVisible] = useState(false);
+    const [schedulingVisible, setSchedulingVisible] = useState(false);
     const [title, setTitle] = useState('');
     const [code, setCode] = useState(null);
     const [columns, setColumns] = useState([
@@ -18,9 +20,14 @@ function Contract() {
             title: '操作',
             align: 'center',
             render: (text, record) => (
-                <Button type='primary' onClick={() => {
-                    material(record)
-                }}>物资明细</Button>
+                <div>
+                    <Button type='primary' style={{'margin-right': '2px'}} onClick={() => {
+                        material(record)
+                    }}>物资明细</Button>
+                    <Button type='primary' onClick={() => {
+                        scheduling(record)
+                    }}>排产资料</Button>
+                </div>
             )
         },
     ])
@@ -79,6 +86,12 @@ function Contract() {
         setVisible(true);
     }
 
+    const scheduling = (data)=>{
+        setCode(data['contract_code']);
+        setTitle('排产资料');
+        setSchedulingVisible(true);
+    }
+
     return (
         <div className="contract">
             <div className="contract-search">
@@ -112,10 +125,19 @@ function Contract() {
                 </ConfigProvider>
             </div>
             {
-                code && (
+                visible && (
                     <Material title={title}
                               visible={visible}
                               setVisible={setVisible}
+                              code={code}
+                              width={1500}/>
+                )
+            }
+            {
+                schedulingVisible && (
+                    <Scheduling title={title}
+                              visible={schedulingVisible}
+                              setVisible={setSchedulingVisible}
                               code={code}
                               width={1500}/>
                 )
