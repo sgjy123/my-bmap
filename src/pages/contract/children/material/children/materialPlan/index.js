@@ -2,40 +2,24 @@ import {Button, ConfigProvider, message, Modal, Pagination, Table} from "antd";
 import React, {useEffect, useState} from "react";
 import zh_CN from "antd/es/locale/zh_CN";
 import {columnsOpt} from "./options";
-import {materialListUrl} from 'service/api/material';
+import {materialPlanUrl} from 'service/api/material';
 import './index.css';
 
 function MaterialPlan(props) {
     const {title, visible, setVisible, width, code} = props;
     const [columns, setColumns] = useState([
-        ...columnsOpt,
-        {
-            title: '操作',
-            align: 'center',
-            ellipsis: true,
-            render: (text, record) => (
-                <div>
-                    {
-                        record['confirmation_status'] === 1 && (
-                            <Button type='primary' style={{'margin-right': '2px'}} onClick={() => {
-                                materialPlan(record)
-                            }}>排产节点</Button>
-                        )
-                    }
-                </div>
-            )
-        }
+        ...columnsOpt
     ])
     const [searchParam, setSearchParam] = useState({
         "page_num": 1,
         "page_size": 10,
-        "contract_code": code
+        "material_id": code
     })
     const [contractData, setContract] = useState([]);
     const [total, setTotal] = useState(0);
     const [loading, setLoading] = useState(true);
     useEffect(()=>{
-        materialListUrl({
+        materialPlanUrl({
             ...searchParam
         }).then((res) => {
             const {data, state, msg} = res;
@@ -64,9 +48,6 @@ function MaterialPlan(props) {
     const changeLoading = (flag) => {
         setLoading(flag);
     }
-    const materialPlan = ()=>{
-
-    }
     return (
         <Modal
             visible={visible}
@@ -84,7 +65,7 @@ function MaterialPlan(props) {
             destroyOnClose={true}
         >
             <div className="contract-table">
-                <Table loading={loading} scroll={{ x: 2000}} columns={columns} dataSource={contractData} pagination={false}/>
+                <Table loading={loading} columns={columns} dataSource={contractData} pagination={false}/>
             </div>
             <div className="contract-page">
                 <ConfigProvider locale={zh_CN}>

@@ -33,7 +33,7 @@ function Scheduling(props) {
                 <div>
                     {
                         record['confirmation_status'] === 1 && (
-                            <Button type='primary' style={{'margin-right': '2px'}} onClick={() => {
+                            <Button type='primary' style={{'marginRight': '2px'}} onClick={() => {
                                 confirmScheduling(record)
                             }}>确认排产资料</Button>
                         )

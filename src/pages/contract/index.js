@@ -8,11 +8,13 @@ import {columnsOpt} from './options';
 import Material from './children/material';
 import Scheduling from './children/scheduling';
 import Plan from './children/plan';
+import Supplier from './children/supplier';
 
 function Contract() {
     const [visible, setVisible] = useState(false);
     const [schedulingVisible, setSchedulingVisible] = useState(false);
     const [planVisible, setPlanVisible] = useState(false);
+    const [supplierVisible, setSupplierVisible] = useState(false);
     const [title, setTitle] = useState('');
     const [code, setCode] = useState(null);
     const [columns, setColumns] = useState([
@@ -21,17 +23,21 @@ function Contract() {
             fixed: 'right',
             title: '操作',
             align: 'center',
+            width: 500,
             render: (text, record) => (
                 <div>
-                    <Button type='primary' style={{'margin-right': '2px'}} onClick={() => {
+                    <Button type='primary' style={{'marginRight': '2px'}} onClick={() => {
                         material(record)
                     }}>物资明细</Button>
-                    <Button type='primary' style={{'margin-right': '2px'}} onClick={() => {
+                    <Button type='primary' style={{'marginRight': '2px'}} onClick={() => {
                         scheduling(record)
                     }}>排产资料</Button>
-                    <Button type='primary' onClick={() => {
+                    <Button type='primary' style={{'marginRight': '2px'}} onClick={() => {
                         schedulingPlan(record)
                     }}>排产计划</Button>
+                    <Button type='primary' onClick={() => {
+                        supplier(record)
+                    }}>供应商成品库</Button>
                 </div>
             )
         },
@@ -103,6 +109,12 @@ function Contract() {
         setPlanVisible(true);
     }
 
+    const supplier = (data)=>{
+        setCode(data['contract_code']);
+        setTitle('供应商成品库');
+        setSupplierVisible(true);
+    }
+
     return (
         <div className="contract">
             <div className="contract-search">
@@ -160,6 +172,15 @@ function Contract() {
                                 setVisible={setPlanVisible}
                                 code={code}
                                 width={1500}/>
+                )
+            }
+            {
+                supplierVisible && (
+                    <Supplier title={title}
+                          visible={supplierVisible}
+                          setVisible={setSupplierVisible}
+                          code={code}
+                          width={1500}/>
                 )
             }
         </div>

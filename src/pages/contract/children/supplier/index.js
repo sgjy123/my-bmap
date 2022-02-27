@@ -2,43 +2,73 @@ import {Button, ConfigProvider, message, Modal, Pagination, Table} from "antd";
 import React, {useEffect, useState} from "react";
 import zh_CN from "antd/es/locale/zh_CN";
 import {columnsOpt} from "./options";
-import {materialListUrl} from 'service/api/material';
+import {supplierListUrl} from 'service/api/supplier';
 import './index.css';
-import MaterialPlan from './children/materialPlan';
+import Warehousing from './children/warehousing';
+import Enclosure from './children/enclosure';
 
-function Material(props) {
+function Supplier(props) {
     const {title, visible, setVisible, width, code} = props;
     const [columns, setColumns] = useState([
         ...columnsOpt,
         {
-            title: '操作',
+            title: '入库物资信息列表',
+            key: 'storage_material',
+            dataIndex: 'storage_material',
             align: 'center',
             ellipsis: true,
-            fixed: 'right',
-            render: (text, record) => (
-                <div>
-                    {
-                        <Button type='primary' style={{'marginRight': '2px'}} onClick={() => {
-                            materialPlan(record)
-                        }}>排产节点</Button>
-                    }
-                </div>
+            render: (text) => (
+                <Button type="link" onClick={()=>{lookStorage(text)}}>查看</Button>
             )
-        }
+        },
+        {
+            title: '入成品库单据附件',
+            key: 'attachmentList',
+            dataIndex: 'attachmentList',
+            align: 'center',
+            ellipsis: true,
+            render: (text) => (
+                <Button type="link" onClick={()=>{lookEnclosure(text)}}>
+                    {text && ('查看')}
+                </Button>
+            )
+        },
     ])
     const [searchParam, setSearchParam] = useState({
         "page_num": 1,
         "page_size": 10,
         "contract_code": code
     })
-    const [contractData, setContract] = useState([]);
+    const [contractData, setContract] = useState([
+        {
+            "storage_id": "47451cae4595428090f0e400aaa28213",
+            "storage_code": "001",
+            "storage_time": 20190712095149,
+            "storage_status": 0,
+            "remarks": "无",
+            "storage_material": [{
+                "material_id": "47451cae4595428090f0e400aaa28213",
+                "material_name": "10kV SBH15油浸式变压器，500kVA",
+                "specification": "SH15-500kVA",
+                "storage_quantity": 1,
+                "unit": "台"
+            }],
+            'attachmentList': [
+                {
+                    'file_name': '文件'
+                }
+            ]
+        }
+    ]);
     const [total, setTotal] = useState(0);
     const [loading, setLoading] = useState(true);
     const [planVisible, setPlanVisible] = useState(false);
+    const [enclosureVisible, setEnclosureVisible] = useState(false);
     const [planTitle, setPlanTitle] = useState('');
-    const [materialId, setMaterialId] = useState('');
+    const [warehousing,setWarehousing] = useState([]);
+    const [enclosure,setEnclosure] = useState([]);
     useEffect(() => {
-        materialListUrl({
+        /*supplierListUrl({
             ...searchParam
         }).then((res) => {
             const {data, state, msg} = res;
@@ -51,7 +81,8 @@ function Material(props) {
                 message.error(msg);
             }
             changeLoading(false);
-        })
+        })*/
+        changeLoading(false);
     },[]);
     const closeModal = (flag) => {
         setVisible(flag);
@@ -67,10 +98,17 @@ function Material(props) {
     const changeLoading = (flag) => {
         setLoading(flag);
     }
-    const materialPlan = (data) => {
-        setMaterialId(data['material_id']);
-        setPlanTitle('排产节点-信息服务');
+    const lookStorage = (data) => {
+        setWarehousing(data);
+        setPlanTitle('入库物资信息');
         setPlanVisible(true);
+    }
+    const lookEnclosure = (data) => {
+        if (data) {
+            setEnclosure(data);
+            setPlanTitle('入成品库单据附件');
+            setEnclosureVisible(true);
+        }
     }
     return (
         <Modal
@@ -89,7 +127,7 @@ function Material(props) {
             destroyOnClose={true}
         >
             <div className="contract-table">
-                <Table loading={loading} scroll={{ x: 2000}} columns={columns} dataSource={contractData} pagination={false}/>
+                <Table loading={loading} columns={columns} dataSource={contractData} pagination={false}/>
             </div>
             <div className="contract-page">
                 <ConfigProvider locale={zh_CN}>
@@ -102,14 +140,21 @@ function Material(props) {
                 </ConfigProvider>
             </div>
             {
-                planVisible && (<MaterialPlan title={planTitle}
+                planVisible && (<Warehousing title={planTitle}
                                               visible={planVisible}
                                               setVisible={setPlanVisible}
-                                              code={materialId}
+                                              data={warehousing}
                                               width={1200}/>)
+            }
+            {
+                enclosureVisible && (<Enclosure title={planTitle}
+                                             visible={enclosureVisible}
+                                             setVisible={setEnclosureVisible}
+                                             data={enclosure}
+                                             width={1200}/>)
             }
         </Modal>
     )
 }
 
-export default Material;
+export default Supplier;
