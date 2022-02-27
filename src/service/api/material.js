@@ -8,3 +8,11 @@ export function materialListUrl(params) {
         data: params,
     });
 }
+// 获取物资明细排产节点设置信息服务
+export function materialPlanUrl(params) {
+    return request({
+        url: '/contract/get_plan_list',
+        method: 'post',
+        data: params,
+    });
+}

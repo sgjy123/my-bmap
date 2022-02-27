@@ -7,10 +7,12 @@ import {contractListUrl} from 'service/api/contract';
 import {columnsOpt} from './options';
 import Material from './children/material';
 import Scheduling from './children/scheduling';
+import Plan from './children/plan';
 
 function Contract() {
     const [visible, setVisible] = useState(false);
     const [schedulingVisible, setSchedulingVisible] = useState(false);
+    const [planVisible, setPlanVisible] = useState(false);
     const [title, setTitle] = useState('');
     const [code, setCode] = useState(null);
     const [columns, setColumns] = useState([
@@ -24,9 +26,12 @@ function Contract() {
                     <Button type='primary' style={{'margin-right': '2px'}} onClick={() => {
                         material(record)
                     }}>物资明细</Button>
-                    <Button type='primary' onClick={() => {
+                    <Button type='primary' style={{'margin-right': '2px'}} onClick={() => {
                         scheduling(record)
                     }}>排产资料</Button>
+                    <Button type='primary' onClick={() => {
+                        schedulingPlan(record)
+                    }}>排产计划</Button>
                 </div>
             )
         },
@@ -92,6 +97,12 @@ function Contract() {
         setSchedulingVisible(true);
     }
 
+    const schedulingPlan = (data)=>{
+        setCode(data['contract_code']);
+        setTitle('排产计划');
+        setPlanVisible(true);
+    }
+
     return (
         <div className="contract">
             <div className="contract-search">
@@ -140,6 +151,15 @@ function Contract() {
                               setVisible={setSchedulingVisible}
                               code={code}
                               width={1500}/>
+                )
+            }
+            {
+                planVisible && (
+                    <Plan title={title}
+                                visible={planVisible}
+                                setVisible={setPlanVisible}
+                                code={code}
+                                width={1500}/>
                 )
             }
         </div>

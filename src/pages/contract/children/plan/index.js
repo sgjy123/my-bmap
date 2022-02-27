@@ -1,30 +1,14 @@
-import {Button, ConfigProvider, message, Modal, Pagination, Table} from "antd";
+import {ConfigProvider, message, Modal, Pagination, Table} from "antd";
 import React, {useEffect, useState} from "react";
 import zh_CN from "antd/es/locale/zh_CN";
 import {columnsOpt} from "./options";
-import {materialListUrl} from 'service/api/material';
+import {planListUrl} from 'service/api/plan';
 import './index.css';
-import MaterialPlan from './children/materialPlan';
 
-function Material(props) {
+function Plan(props) {
     const {title, visible, setVisible, width, code} = props;
     const [columns, setColumns] = useState([
         ...columnsOpt,
-        {
-            title: '操作',
-            align: 'center',
-            ellipsis: true,
-            fixed: 'right',
-            render: (text, record) => (
-                <div>
-                    {
-                        <Button type='primary' style={{'margin-right': '2px'}} onClick={() => {
-                            materialPlan(record)
-                        }}>排产节点</Button>
-                    }
-                </div>
-            )
-        }
     ])
     const [searchParam, setSearchParam] = useState({
         "page_num": 1,
@@ -34,11 +18,8 @@ function Material(props) {
     const [contractData, setContract] = useState([]);
     const [total, setTotal] = useState(0);
     const [loading, setLoading] = useState(true);
-    const [planVisible, setPlanVisible] = useState(false);
-    const [planTitle, setPlanTitle] = useState('');
-    const [materialId, setMaterialId] = useState('');
-    useEffect(() => {
-        materialListUrl({
+    useEffect(()=>{
+        planListUrl({
             ...searchParam
         }).then((res) => {
             const {data, state, msg} = res;
@@ -53,6 +34,7 @@ function Material(props) {
             changeLoading(false);
         })
     },[]);
+
     const closeModal = (flag) => {
         setVisible(flag);
     }
@@ -66,11 +48,6 @@ function Material(props) {
     }
     const changeLoading = (flag) => {
         setLoading(flag);
-    }
-    const materialPlan = (data) => {
-        setMaterialId(data['material_id']);
-        setPlanTitle('排产节点');
-        setPlanVisible(true);
     }
     return (
         <Modal
@@ -101,15 +78,8 @@ function Material(props) {
                                 showQuickJumper/>
                 </ConfigProvider>
             </div>
-            {
-                planVisible && (<MaterialPlan title={planTitle}
-                                              visible={planVisible}
-                                              setVisible={setPlanVisible}
-                                              code={materialId}
-                                              width={1200}/>)
-            }
         </Modal>
     )
 }
 
-export default Material;
+export default Plan;

@@ -4,9 +4,8 @@ import zh_CN from "antd/es/locale/zh_CN";
 import {columnsOpt} from "./options";
 import {materialListUrl} from 'service/api/material';
 import './index.css';
-import MaterialPlan from './children/materialPlan';
 
-function Material(props) {
+function MaterialPlan(props) {
     const {title, visible, setVisible, width, code} = props;
     const [columns, setColumns] = useState([
         ...columnsOpt,
@@ -14,13 +13,14 @@ function Material(props) {
             title: '操作',
             align: 'center',
             ellipsis: true,
-            fixed: 'right',
             render: (text, record) => (
                 <div>
                     {
-                        <Button type='primary' style={{'margin-right': '2px'}} onClick={() => {
-                            materialPlan(record)
-                        }}>排产节点</Button>
+                        record['confirmation_status'] === 1 && (
+                            <Button type='primary' style={{'margin-right': '2px'}} onClick={() => {
+                                materialPlan(record)
+                            }}>排产节点</Button>
+                        )
                     }
                 </div>
             )
@@ -34,10 +34,7 @@ function Material(props) {
     const [contractData, setContract] = useState([]);
     const [total, setTotal] = useState(0);
     const [loading, setLoading] = useState(true);
-    const [planVisible, setPlanVisible] = useState(false);
-    const [planTitle, setPlanTitle] = useState('');
-    const [materialId, setMaterialId] = useState('');
-    useEffect(() => {
+    useEffect(()=>{
         materialListUrl({
             ...searchParam
         }).then((res) => {
@@ -67,10 +64,8 @@ function Material(props) {
     const changeLoading = (flag) => {
         setLoading(flag);
     }
-    const materialPlan = (data) => {
-        setMaterialId(data['material_id']);
-        setPlanTitle('排产节点');
-        setPlanVisible(true);
+    const materialPlan = ()=>{
+
     }
     return (
         <Modal
@@ -101,15 +96,9 @@ function Material(props) {
                                 showQuickJumper/>
                 </ConfigProvider>
             </div>
-            {
-                planVisible && (<MaterialPlan title={planTitle}
-                                              visible={planVisible}
-                                              setVisible={setPlanVisible}
-                                              code={materialId}
-                                              width={1200}/>)
-            }
+
         </Modal>
     )
 }
 
-export default Material;
+export default MaterialPlan;
