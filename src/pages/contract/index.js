@@ -1,11 +1,16 @@
 import React, {useEffect, useState} from "react";
-import {Button, Col, ConfigProvider, Form, Input, message, Pagination, Row, Table} from 'antd';
+import {Button, ConfigProvider, Form, Input, message, Pagination, Table} from 'antd';
 import zh_CN from 'antd/es/locale/zh_CN';
 import {SearchOutlined} from '@ant-design/icons';
 import './index.css';
 import {contractListUrl} from 'service/api/contract';
 import {columnsOpt} from './options';
+import Material from './children/material';
+
 function Contract() {
+    const [visible, setVisible] = useState(false);
+    const [title, setTitle] = useState('');
+    const [code, setCode] = useState(null);
     const [columns, setColumns] = useState([
         ...columnsOpt,
         {
@@ -13,7 +18,9 @@ function Contract() {
             title: '操作',
             align: 'center',
             render: (text, record) => (
-                <Button type='primary' onClick={()=>{material(record)}}>物资明细</Button>
+                <Button type='primary' onClick={() => {
+                    material(record)
+                }}>物资明细</Button>
             )
         },
     ])
@@ -67,7 +74,9 @@ function Contract() {
     }
 
     const material = (data)=>{
-
+        setCode(data['contract_code']);
+        setTitle('物资明细');
+        setVisible(true);
     }
 
     return (
@@ -102,6 +111,15 @@ function Contract() {
                                 showQuickJumper/>
                 </ConfigProvider>
             </div>
+            {
+                code && (
+                    <Material title={title}
+                              visible={visible}
+                              setVisible={setVisible}
+                              code={code}
+                              width={1500}/>
+                )
+            }
         </div>
     )
 }
