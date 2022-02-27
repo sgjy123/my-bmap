@@ -10,6 +10,7 @@ import Scheduling from './children/scheduling';
 import Plan from './children/plan';
 import Supplier from './children/supplier';
 import Distribution from './children/distribution';
+import WarehousingOrder from './children/warehousingOrder';
 
 function Contract() {
     const [visible, setVisible] = useState(false);
@@ -17,6 +18,7 @@ function Contract() {
     const [planVisible, setPlanVisible] = useState(false);
     const [supplierVisible, setSupplierVisible] = useState(false);
     const [distributionVisible, setDistributionVisible] = useState(false);
+    const [warehousingOrderVisible, setWarehousingOrderVisible] = useState(false);
     const [title, setTitle] = useState('');
     const [code, setCode] = useState(null);
     const [columns, setColumns] = useState([
@@ -25,24 +27,27 @@ function Contract() {
             fixed: 'right',
             title: '操作',
             align: 'center',
-            width: 500,
+            width: 300,
             render: (text, record) => (
                 <div>
-                    <Button type='primary' style={{'marginRight': '2px'}} onClick={() => {
+                    <Button type='primary' style={{'marginRight': '2px','marginBottom': '2px'}} onClick={() => {
                         material(record)
                     }}>物资明细</Button>
-                    <Button type='primary' style={{'marginRight': '2px'}} onClick={() => {
+                    <Button type='primary' style={{'marginRight': '2px','marginBottom': '2px'}} onClick={() => {
                         scheduling(record)
                     }}>排产资料</Button>
-                    <Button type='primary' style={{'marginRight': '2px'}} onClick={() => {
+                    <Button type='primary' style={{'marginRight': '2px','marginBottom': '2px'}} onClick={() => {
                         schedulingPlan(record)
                     }}>排产计划</Button>
-                    <Button type='primary' style={{'marginRight': '2px'}} onClick={() => {
+                    <Button type='primary' style={{'marginRight': '2px','marginBottom': '2px'}} onClick={() => {
                         supplier(record)
                     }}>供应商成品库</Button>
-                    <Button type='primary' onClick={() => {
+                    <Button type='primary' style={{'marginRight': '2px','marginBottom': '2px'}} onClick={() => {
                         distribution(record)
                     }}>配送单</Button>
+                    <Button type='primary' style={{'marginRight': '2px','marginBottom': '2px'}} onClick={() => {
+                        warehousingOrder(record)
+                    }}>合同入库单</Button>
                 </div>
             )
         },
@@ -126,6 +131,12 @@ function Contract() {
         setDistributionVisible(true);
     }
 
+    const warehousingOrder = (data)=>{
+        setCode(data['contract_code']);
+        setTitle('合同入库单');
+        setWarehousingOrderVisible(true);
+    }
+
     return (
         <div className="contract">
             <div className="contract-search">
@@ -201,6 +212,15 @@ function Contract() {
                               setVisible={setDistributionVisible}
                               code={code}
                               width={1500}/>
+                )
+            }
+            {
+                warehousingOrderVisible && (
+                    <WarehousingOrder title={title}
+                                  visible={warehousingOrderVisible}
+                                  setVisible={setWarehousingOrderVisible}
+                                  code={code}
+                                  width={1500}/>
                 )
             }
         </div>
