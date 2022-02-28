@@ -102,9 +102,17 @@ function AddPayment(props) {
             }
         })
     }, []);
+    function roundFun(value, n) {
+        return Math.round(value*Math.pow(10,n))/Math.pow(10,n);
+    }
     const queryTable = (values) => {
         // 格式化日期
         values['invoice_date'] = values['invoice_date'].format('YYYY-MM-DD');
+        values['amount_money'] = Math.floor(values['amount_money'] * 100) / 100;
+        values['amount_tax'] = Math.floor(values['amount_tax'] * 100) / 100;
+        values['amount_total'] = Math.floor(values['amount_total'] * 100) / 100;
+        values['payment_ratio'] = Math.floor(values['payment_ratio'] * 100) / 100;
+
         payment.payment = {
             ...values
         }
