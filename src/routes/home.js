@@ -17,6 +17,6 @@ routes.push({
     to: '/login',
     redirect: true,
     component: Login,
-    key: '/login'
+    key: 'redirect'
 })
 export default routes;

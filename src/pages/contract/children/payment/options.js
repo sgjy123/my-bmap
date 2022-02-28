@@ -15,7 +15,15 @@ const columnsOpt = [
         dataIndex: 'payment_type',
         width: 200,
         align: 'center',
-        ellipsis: true
+        ellipsis: true,
+        render: (text)=>(
+            <span>
+                {text === 1 ? '预付款':null}
+                {text === 2 ? '入成品库款':null}
+                {text === 3 ? '货到付款':null}
+                {text === 4 ? '质保金':null}
+            </span>
+        )
     },
     {
         title: '金额',
@@ -44,7 +52,15 @@ const columnsOpt = [
         key: 'payment_status',
         dataIndex: 'payment_status',
         align: 'center',
-        ellipsis: true
+        ellipsis: true,
+        render: (text)=>(
+            <span>
+                {text === 0 ? '已填写':null}
+                {text === 5 ? '已发送':null}
+                {text === 8 ? '已退回':null}
+                {text === 10 ? '已反馈':null}
+            </span>
+        )
     },
     {
         title: '实际付款比例',

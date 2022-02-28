@@ -218,29 +218,31 @@ function Contract() {
             }
             {
                 distributionVisible && (
-                    <Distribution title={title}
-                              visible={distributionVisible}
-                              setVisible={setDistributionVisible}
-                              code={code}
-                              width={1500}/>
+                    <Distribution
+                        title={title}
+                        visible={distributionVisible}
+                        setVisible={setDistributionVisible}
+                        code={code}
+                        width={1500}/>
                 )
             }
             {
                 warehousingOrderVisible && (
-                    <WarehousingOrder title={title}
-                                  visible={warehousingOrderVisible}
-                                  setVisible={setWarehousingOrderVisible}
-                                  code={code}
-                                  width={1500}/>
+                    <WarehousingOrder
+                        title={title}
+                        visible={warehousingOrderVisible}
+                        setVisible={setWarehousingOrderVisible}
+                        code={code}
+                        width={1500}/>
                 )
             }
             {
                 paymentVisible && (
                     <Payment title={title}
-                                      visible={paymentVisible}
-                                      setVisible={setPaymentVisible}
-                                      code={code}
-                                      width={1500}/>
+                             visible={paymentVisible}
+                             setVisible={setPaymentVisible}
+                             code={code}
+                             width={1500}/>
                 )
             }
         </div>

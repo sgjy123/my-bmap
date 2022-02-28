@@ -68,7 +68,7 @@ function Supplier(props) {
     const [warehousing,setWarehousing] = useState([]);
     const [enclosure,setEnclosure] = useState([]);
     useEffect(() => {
-        /*supplierListUrl({
+        supplierListUrl({
             ...searchParam
         }).then((res) => {
             const {data, state, msg} = res;
@@ -81,8 +81,7 @@ function Supplier(props) {
                 message.error(msg);
             }
             changeLoading(false);
-        })*/
-        changeLoading(false);
+        })
     },[]);
     const closeModal = (flag) => {
         setVisible(flag);
