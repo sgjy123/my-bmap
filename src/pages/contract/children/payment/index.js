@@ -4,8 +4,10 @@ import zh_CN from "antd/es/locale/zh_CN";
 import {columnsOpt} from "./options";
 import {paymentListUrl} from 'service/api/payment';
 import './index.css';
-import {SearchOutlined, PlusOutlined} from "@ant-design/icons";
+import {CloseCircleOutlined, PlusOutlined, SearchOutlined} from "@ant-design/icons";
 import AddPayment from './children/addPayment';
+import EditPayment from './children/editPayment';
+import {paymentUpdateUrl} from "../../../../service/api/payment";
 
 function Payment(props) {
     const {title, visible, setVisible, width, code} = props;
@@ -17,8 +19,12 @@ function Payment(props) {
             align: 'center',
             render: (text, record) => (
                 <Space>
-                    <Button size="small">编辑</Button>
-                    <Button danger size="small">删除</Button>
+                    <Button size="small" onClick={() => {
+                        editPayment(record, 'edit')
+                    }}>编辑</Button>
+                    <Button danger size="small" onClick={() => {
+                        delPayment(record)
+                    }}>删除</Button>
                 </Space>
             )
         }
@@ -40,12 +46,15 @@ function Payment(props) {
             "bank": "中国建设银行股份有限公司厦门吕岭支行",
             "bank_account": "35XXXX1600XXXX50XXXX",
             "invoicer": "广东XXX科技有限公司",
-            "invoice_date": 20170609
+            "invoice_date": 20170609,
+            "storage_material_ids": ['47451cae4595428090f0e400aaa'],
+            "entry_ids": ['47451cae4595428090f0e400aaa28213'],
         }
     ]);
     const [total, setTotal] = useState(0);
     const [loading, setLoading] = useState(true);
     const [addVisible, setAddVisible] = useState('');
+    const [dataForm, setDataForm] = useState({});
     useEffect(() => {
         // getData();
         changeLoading(false);
@@ -88,14 +97,42 @@ function Payment(props) {
             'payment_type': paymentType,
         });
     }
-    const handleChange = (values) =>{
+    const handleChange = (values) => {
         setSearchParam({
             ...searchParam,
             'payment_type': values,
         });
     }
-    const showAdd = (flag)=>{
+    const showAdd = (flag) => {
         setAddVisible(flag);
+    }
+    const editPayment = (data, flag) => {
+        setDataForm({...data});
+        setAddVisible(flag);
+    }
+    const delPayment = (data) => {
+        Modal.confirm({
+            title: '删除操作?',
+            icon: <CloseCircleOutlined/>,
+            content: '你确定删除此条信息吗？',
+            onOk() {
+                paymentUpdateUrl({
+                    "operation_type": 'del',
+                    "contract_code": code,
+                    ...data
+                }).then((res) => {
+                    const {data, state, msg} = res;
+                    if (state === 1) {
+                        message.success('提交成功');
+                    } else {
+                        message.error(msg);
+                    }
+                });
+            },
+            onCancel() {
+                message.info('取消删除');
+            },
+        });
     }
     return (
         <Modal
@@ -164,7 +201,17 @@ function Payment(props) {
                                 visible={addVisible}
                                 setVisible={setAddVisible}
                                 code={code}
-                                width={600} />
+                                width={600}/>
+                )
+            }
+            {
+                addVisible === 'edit' && (
+                    <EditPayment title={'编辑款项'}
+                                 dataForm={dataForm}
+                                 visible={addVisible}
+                                 setVisible={setAddVisible}
+                                 code={code}
+                                 width={600}/>
                 )
             }
         </Modal>
