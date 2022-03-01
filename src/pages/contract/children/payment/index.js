@@ -56,8 +56,8 @@ function Payment(props) {
     const [addVisible, setAddVisible] = useState('');
     const [dataForm, setDataForm] = useState({});
     useEffect(() => {
-        // getData();
-        changeLoading(false);
+        getData();
+        // changeLoading(false);
     }, [searchParam]);
     const closeModal = (flag) => {
         setVisible(flag);

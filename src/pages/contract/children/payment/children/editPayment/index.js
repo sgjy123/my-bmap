@@ -52,7 +52,7 @@ function EditPayment(props) {
             "contract_code": code
         }).then((res) => {
             const {data, state, msg} = res;
-            data['result'].push(
+            /*data['result'].push(
                 {
                     "storage_id": "47451cae4595428090f0e400aaa28213",
                     "storage_code": "001",
@@ -68,7 +68,7 @@ function EditPayment(props) {
                     "storage_code": "003",
                     "storage_status": 10,
                 }
-            )
+            )*/
             if (state === 1) {
                 let arr = data['result'].filter((item) => {
                     return item['storage_status'] === 10
@@ -84,7 +84,7 @@ function EditPayment(props) {
             "contract_code": code
         }).then((res) => {
             const {data, state, msg} = res;
-            data['result'].push(
+            /*data['result'].push(
                 {
                     "entry_id": "47451cae4595428090f0e400aaa28213",
                     "entry_code": "001",
@@ -97,7 +97,7 @@ function EditPayment(props) {
                     "entry_id": "47451cae4595428090f0e400aaa",
                     "entry_code": "003",
                 }
-            )
+            )*/
             if (state === 1) {
                 setEntry([...data['result']]);
             } else {
