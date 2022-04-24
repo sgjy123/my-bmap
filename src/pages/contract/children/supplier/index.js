@@ -1,4 +1,4 @@
-import {Button, ConfigProvider, message, Modal, Pagination, Table} from "antd";
+import {Button, ConfigProvider, message, Modal, Pagination, Space, Table} from "antd";
 import React, {useEffect, useState} from "react";
 import zh_CN from "antd/es/locale/zh_CN";
 import {columnsOpt} from "./options";
@@ -6,6 +6,8 @@ import {supplierListUrl} from 'service/api/supplier';
 import './index.css';
 import Warehousing from './children/warehousing';
 import Enclosure from './children/enclosure';
+import {PlusOutlined} from "@ant-design/icons";
+import AddPayment from "../payment/children/addPayment";
 
 function Supplier(props) {
     const {title, visible, setVisible, width, code} = props;
@@ -67,6 +69,7 @@ function Supplier(props) {
     const [planTitle, setPlanTitle] = useState('');
     const [warehousing,setWarehousing] = useState([]);
     const [enclosure,setEnclosure] = useState([]);
+    const [addVisible, setAddVisible] = useState('');
     useEffect(() => {
         supplierListUrl({
             ...searchParam
@@ -109,6 +112,9 @@ function Supplier(props) {
             setEnclosureVisible(true);
         }
     }
+    const showAdd = (flag) => {
+        setAddVisible(flag);
+    }
     return (
         <Modal
             visible={visible}
@@ -125,6 +131,11 @@ function Supplier(props) {
             onCancel={() => closeModal(false)}
             destroyOnClose={true}
         >
+            <Button type="primary"
+                    icon={<PlusOutlined />}
+                    onClick={() => {
+                        showAdd('add')
+                    }}>新增款项</Button>
             <div className="contract-table">
                 <Table loading={loading} columns={columns} dataSource={contractData} pagination={false}/>
             </div>
@@ -151,6 +162,15 @@ function Supplier(props) {
                                              setVisible={setEnclosureVisible}
                                              data={enclosure}
                                              width={1200}/>)
+            }
+            {
+                addVisible === 'add' && (
+                    <AddPayment title={'新增款项'}
+                                visible={addVisible}
+                                setVisible={setAddVisible}
+                                code={code}
+                                width={600}/>
+                )
             }
         </Modal>
     )

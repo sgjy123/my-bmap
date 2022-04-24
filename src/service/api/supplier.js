@@ -8,3 +8,13 @@ export function supplierListUrl(params) {
         data: params,
     });
 }
+
+// 新增/修改/删除入供应商成品库服务
+export function updateSupplierUrl(params) {
+    return request({
+        url: '/contract/update_storage',
+        method: 'post',
+        data: params,
+    });
+}
+
