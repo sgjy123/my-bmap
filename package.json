@@ -27,6 +27,7 @@
     "eslint-webpack-plugin": "^2.5.2",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.8.1",
+    "r-analog-clock": "^1.0.1",
     "react": "^17.0.2",
     "react-bmapgl": "^0.1.28",
     "react-dom": "^17.0.2",

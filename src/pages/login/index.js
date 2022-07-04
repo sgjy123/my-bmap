@@ -1,81 +1,73 @@
-import React from "react";
-import { useHistory } from 'react-router-dom';
-import {Button, Form, Input, message} from 'antd';
-import {LockOutlined, UserOutlined} from '@ant-design/icons';
-
-import './index.css';
-import imgAiWrap from 'assets/images/login/aiwrap.png';
-import {loginUrl} from 'service/api/login';
-
+import React, {useEffect, useRef} from "react";
+import { createFromIconfontCN } from '@ant-design/icons'; // 导入图标
+import AnalogClock from 'r-analog-clock'; // 导入了一个时钟插件
+import CustomIcon from "../../components/CustomIcon"; // svg自定义组件
+import {Thor, Arrow} from './svg'; // 导入svg
+import './index.css'; // 导入样式
+import ClockBg from './../../assets/images/login/clock-bg.jpeg'; // 时钟背景图
 function Login() {
-    const history = useHistory();
-    const onFinish = ({username, password}) => {
-        loginUrl({
-            username,
-            password
-        }).then(({code,data,msg})=>{
-            if (code === 200) {
-                message.success('登录成功');
-                window.localStorage.setItem('username',data.username);
-                history.push('/layout/contract');
-            } else {
-                message.error(msg);
-            }
-        });
-    };
+    const ac = useRef(); // 时钟
+    /*useEffect(()=>{
+        ac.current.run(); // 开启时钟
+        return ()=>{
+            ac.current.stop(); // 关闭时钟
+        }
+    },[]);*/
     return (
         <div className='login'>
-            <div className="login-body">
-                <div className="login-body-title">
-                    <div className='title'>ERP系统登录</div>
-                    <div className='icon'>
-                        <img src={imgAiWrap} alt="icon"/>
+            {/*一堆小云*/}
+            <div id="clouds-content">
+                <div id="clouds">
+                    <div className="cloud-1" data-speed="35000" />
+                    <div className="cloud-2" data-speed="45000" data-delay="15000"/>
+                    <div className="cloud-3" data-speed="40000" />
+                    <div className="cloud-4" data-speed="38000" data-delay="20000"/>
+                </div>
+            </div>
+            {/*一个时钟*/}
+            <div className='login-clock'>
+                {/*<AnalogClock ref={ac}
+                             size={260}
+                             borderColor='#C3D57D'
+                             borderWidth={4}
+                             backgroundAlpha={0.6}
+                             scaleColor='#DA4949'
+                             handType='line'
+                             backgroundImage={ClockBg} />*/}
+            </div>
+            {/*登录体验区*/}
+            <div className='login-content'>
+                <div className='login-content_header'>
+                    <CustomIcon svg={Thor} style={{
+                        fontSize: '30px'
+                    }}/>
+                    众神之殿-管理系统
+                </div>
+                <div className='login-content_content'>
+                    <div className='login-content_content-line'>
+                        <input className="tip" name="username" type="text" />
+                        <label htmlFor="username">用户名</label>
+                        <div className="tooltip">填写您的用户名</div>
+                    </div>
+                    <div className='login-content_content-line'>
+                        <input className="tip" name="password" type="password" />
+                        <label htmlFor="username">密码</label>
+                        <div className="tooltip">填写您的密码</div>
                     </div>
                 </div>
-                <Form
-                    name="normal_login"
-                    className="login-form"
-                    initialValues={{
-                        remember: true,
-                    }}
-                    onFinish={onFinish}>
-                    <Form.Item
-                        name="username"
-                        rules={[
-                            {
-                                required: true,
-                                message: '请输入用户名！',
-                            },
-                        ]}>
-                        <Input size="large"
-                               autoComplete="off"
-                               prefix={<UserOutlined className="site-form-item-icon"/>}
-                               placeholder="用户名"/>
-                    </Form.Item>
-                    <Form.Item
-                        name="password"
-                        rules={[
-                            {
-                                required: true,
-                                message: '请输入密码！',
-                            },
-                        ]}>
-                        <Input
-                            size="large"
-                            autoComplete="off"
-                            prefix={<LockOutlined className="site-form-item-icon"/>}
-                            type="password"
-                            placeholder="密码"
-                        />
-                    </Form.Item>
-                    <Form.Item>
-                        <Button block
-                                size='large'
-                                type="primary"
-                                htmlType="submit"
-                                className="login-form-button">登录</Button>
-                    </Form.Item>
-                </Form>
+                <div className="login-content_footer">
+                    <button className="login_btn">
+                        <div className="login_btn-container">
+                            <div className="login_btn-icon">
+                                <CustomIcon svg={Arrow} style={{
+                                    fontSize: '28px',
+                                    color: '#fff'
+                                }}/>
+                            </div>
+                            <span>登录</span>
+                        </div>
+                    </button>
+                </div>
             </div>
         </div>
     )

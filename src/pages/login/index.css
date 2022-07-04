@@ -3,56 +3,285 @@
  * @author: 上官靖宇
  * @date: 2022/1/5 10:41
  */
+body {
+    overflow: hidden;
+}
+
 .login {
     width: 100%;
     height: 100%;
-    background: url("./../../assets/images/login/loginbg.jpg") no-repeat;
+    background: #87cefa;
 }
 
-.login-body {
+#clouds {
     position: absolute;
-    top: 30%;
-    left: 50%;
-    padding: 40px 0;
-    background-color: #fff;
-    border-radius: 8px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }
 
-.login-body-title {
-    position: relative;
-    left: -18px;
-    margin-bottom: 30px;
-    line-height: 50px;
-    background-color: #0E7D68;
-}
-.login-body-title .title {
-    padding-left: 18px;
-    font-size: 20px;
-    font-weight: 500;
-    color: #ffffff;
+[class^="cloud-"] {
+    position: absolute;
+    right: 120%;
+    width: 200px;
+    height: 60px;
+    background: white;
+    -webkit-border-radius: 200px;
+    -moz-border-radius: 200px;
+    border-radius: 200px;
 }
 
-.login-body-title .icon {
+[class^="cloud-"]:before, [class^="cloud-"]:after {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 10px;
+    width: 100px;
+    height: 80px;
+    background: #fff;
+    -webkit-border-radius: 100px;
+    border-radius: 100px;
+    -webkit-transform: rotate(30deg);
+    -moz-transform: rotate(30deg);
+    transform: rotate(30deg);
+}
+
+[class^="cloud-"]:after {
+    top: -55px;
+    left: auto;
+    right: 15px;
+    width: 120px;
+    height: 120px;
+}
+
+.cloud-1 {
+    top: 50px;
+    -webkit-animation: moveclouds 30s linear infinite;
+    -moz-animation: moveclouds 30s linear infinite;
+    -o-animation: moveclouds 30s linear infinite;
+    animation: moveclouds 30s linear infinite;
+}
+
+.cloud-2 {
+    top: 100px;
+    opacity: 0.8;
+    -webkit-transform: scale(0.8);
+    -moz-transform: scale(0.8);
+    transform: scale(0.8);
+    -webkit-animation: moveclouds 45s linear infinite;
+    -moz-animation: moveclouds 45s linear infinite;
+    -o-animation: moveclouds 45s linear infinite;
+    animation: moveclouds 45s linear infinite;
+    -webkit-animation-delay: 5s;
+    -moz-animation-delay: 5s;
+    animation-delay: 5s;
+}
+
+.cloud-3 {
+    top: 150px;
+    opacity: 0.6;
+    -webkit-transform: scale(0.6);
+    -moz-transform: scale(0.6);
+    transform: scale(0.6);
+    -webkit-animation: moveclouds 40s linear infinite;
+    -moz-animation: moveclouds 40s linear infinite;
+    -o-animation: moveclouds 40s linear infinite;
+    animation: moveclouds 40s linear infinite;
+}
+
+.cloud-4 {
+    top: 200px;
+    opacity: 0.75;
+    -webkit-transform: scale(0.75);
+    -moz-transform: scale(0.75);
+    transform: scale(0.75);
+    -webkit-animation: moveclouds 26s linear infinite;
+    -moz-animation: moveclouds 26s linear infinite;
+    -o-animation: moveclouds 26s linear infinite;
+    animation: moveclouds 26s linear infinite;
+    -webkit-animation-delay: 8s;
+    -moz-animation-delay: 8s;
+    animation-delay: 8s;
+}
+
+/*云层移动*/
+@keyframes moveclouds {
+    0% {
+        right: -20%;
+    }
+    100% {
+        right: 120%;
+    }
+}
+
+@-webkit-keyframes moveclouds {
+    0% {
+        right: -20%;
+    }
+    100% {
+        right: 120%;
+    }
+}
+
+@-moz-keyframes moveclouds {
+    0% {
+        right: -20%;
+    }
+    100% {
+        right: 120%;
+    }
+}
+
+@-o-keyframes moveclouds {
+    0% {
+        right: -20%;
+    }
+    100% {
+        right: 120%;
+    }
+}
+
+/*时钟*/
+.login-clock {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+}
+
+/*登录体验区*/
+.login-content {
+    position: absolute;
+    top: 36%;
+    left: 10%;
+    width: 400px;
+    background: #F8F8F8;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+}
+
+.login-content_header {
     display: flex;
-    justify-content: left;
-    position: absolute;
-    line-height: 1;
-    vertical-align: top;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: #77CA60;
+    background: #FFF;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
 }
 
-.login-body-title .icon img {
+.login-content_content {
+    padding: 30px 20px;
+}
+
+.login-content_content input {
+    width: 100%;
+    padding: 14px 15px;
+    background: #F0F0F0;
+    font: normal 16px/1.5 Helvetica, "Microsoft Yahei", Arial, sans-serif;
+    color: #444;
+    outline: 0;
+    border: 0;
+    border-radius: 3px;
+}
+
+.login-content_content .login-content_content-line {
+    position: relative;
+    height: 50px;
+    margin-bottom: 30px;
+}
+
+.login-content_content .login-content_content-line .tip {
+    text-indent: 80px;
+    transition: all .3s ease-in-out;
+}
+
+.login-content_content .login-content_content-line .tip:focus,
+.login-content_content .login-content_content-line .tip:active {
+    text-indent: 0;
+}
+
+.login-content_content .login-content_content-line .tip + label {
+    position: absolute;
+    top: 16px;
+    left: 15px;
+    transition: all .3s ease-in-out;
+}
+
+.login-content_content .login-content_content-line .tip:focus + label,
+.login-content_content .login-content_content-line .tip:active + label {
+    -webkit-transform: translateY(-40px);
+    -moz-transform: translateY(-40px);
+    transform: translateY(-40px);
+}
+
+.login-content_content .login-content_content-line .tooltip {
+    width: 200px;
+    padding: 14px;
+    position: absolute;
+    left: 20%;
+    top: 0;
+    right: 0;
+    color: #999;
+    background: white;
+    text-align: left;
+    z-index: -1;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
+}
+
+.login-content_content .login-content_content-line .tooltip:after {
+    width: 0;
+    height: 0;
+    content: "";
+    position: absolute;
+    right: 100%;
+    top: 18px;
+    color: #87CEFA;
+    border: 8px solid;
+    border-right-color: white;
+}
+
+.login-content_footer .login_btn {
+    width: 100%;
+    height: 60px;
+    outline: 0;
+    padding: 0;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 22px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    transition: all .5s linear;
+    background: linear-gradient(to right, #555ba6 50%, #77CA60 50%) right bottom;
+    background-size: 200% 100%;
+}
+.login-content_footer .login_btn-container {
+    position: relative;
     width: 100%;
     height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-content_footer .login_btn-icon {
+    position: absolute;
+    left: 0;
+    height: 60px;
+    line-height: 60px;
+    width: 50px;
+    border-radius: 10px;
+    background-color: #555ba6;
+}
+.login-content_footer .login_btn:hover {
+    background-position: left bottom;
 }
 
-.login-form {
-    margin: 0 80px;
-}
-.login-form .login-form-button {
-    background-color: #0E7D68;
-}
-.login-form .login-form-button:hover {
-    background-color: rgba(19, 153, 125, 0.91);
-}
+
 
 
