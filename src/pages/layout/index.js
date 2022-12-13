@@ -19,7 +19,6 @@ function ALayout(props) {
     const [collapsed, setCollapsed] = useState(false);
     const [currentNav, setCurrentNav] = useState(getUrl());
     const [userName, setUserName] = useState(localStorage.getItem('username'));
-
     useEffect(()=> {
         if (localStorage.getItem('userName') === '') {
             history.push('/login');
@@ -34,7 +33,7 @@ function ALayout(props) {
 
     function getUrl() {
         const {pathname} = location;
-        return pathname === '/' ? pathname.split('/')[pathname.split('/').length - 1] : '/layout/contract'
+        return pathname === '/' ? pathname.split('/')[pathname.split('/').length - 1] : routes[0].key
     }
 
     function handleNavMenu({key}) {
