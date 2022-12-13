@@ -28,6 +28,10 @@
     border-radius: 4px;
 }
 
+.layout .logo.logo-small .txt {
+    display: none;
+}
+
 .layout .logo .txt {
     font-weight: 500;
     font-size: 16px;
@@ -74,9 +78,9 @@
     background-color: #ccc;
     border-radius: 2px;
 }
-.layout .ant-layout-sider {
+/*.layout .ant-layout-sider {
     background-color: #14578B;
 }
 .ant-menu.ant-menu-dark, .ant-menu-dark .ant-menu-sub, .ant-menu.ant-menu-dark .ant-menu-sub {
     background-color: #14578B;
-}
+}*/

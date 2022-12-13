@@ -8,23 +8,25 @@ import routes from 'routes/pages';
 // 样式
 import './index.css';
 // 资源
-import logo from 'assets/images/logox1.png';
+import logo from 'assets/images/menu/menu-logo.png';
 import UserOutlined from "@ant-design/icons/lib/icons/UserOutlined";
 
 const {Sider, Content, Header} = Layout;
 const {SubMenu} = Menu;
-const username = window.localStorage.getItem('username');
 function ALayout(props) {
     const location = useLocation();
     const history = useHistory();
     const [collapsed, setCollapsed] = useState(false);
     const [currentNav, setCurrentNav] = useState(getUrl());
+    const [userName, setUserName] = useState(localStorage.getItem('username'));
 
     useEffect(()=> {
-        if (localStorage.getItem('username') === '') {
+        if (localStorage.getItem('userName') === '') {
             history.push('/login');
+        } else {
+            setUserName(localStorage.getItem('username'));
         }
-    },[]);
+    },[localStorage.getItem('username')]);
 
     function toggle() {
         setCollapsed(!collapsed);
@@ -43,7 +45,7 @@ function ALayout(props) {
     function handleLoginMenu(e) {
         const {key} = e;
         if (key === 'logout') {
-            localStorage.setItem('username', '');
+            localStorage.setItem('userName', '');
             history.push('/login');
         }
     }
@@ -59,10 +61,10 @@ function ALayout(props) {
 
     return (
         <Layout className='layout'>
-            <Sider trigger={null} collapsible collapsed={collapsed}>
+            <Sider theme="dark" trigger={null} collapsible collapsed={collapsed}>
                 <div className={collapsed ? 'logo logo-small' : 'logo'}>
-                    {/*<img className="logo-img" src={collapsed ? logoSmall : logo} alt="百度地图"/>*/}
-                    <span className="txt">昊虹ERP(通用版)</span>
+                    <img className="logo-img" src={collapsed ? logo : logo} alt="系统管理"/>
+                    <span className="txt" >系统管理</span>
                 </div>
                 <Menu theme="dark"
                       mode="inline"
@@ -97,7 +99,7 @@ function ALayout(props) {
                     <Dropdown overlay={loginMenu} trigger="hover" placement="bottomCenter">
                         <div className="user">
                             <Avatar style={{backgroundColor: '#87d068'}} icon={<UserOutlined/>}/>
-                            <span className='user-name'>{username}</span>
+                            <span className='user-name'>{userName}</span>
                         </div>
                     </Dropdown>
                 </Header>

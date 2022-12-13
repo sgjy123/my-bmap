@@ -2,10 +2,14 @@
 import Map from 'pages/map';
 import Page1 from 'pages/map/children/page1';
 import Table from 'pages/table';
+import CacheManage from 'pages/cache-manage';
 import Contract from 'pages/contract';
 import React from "react";
 import {
-    UnorderedListOutlined
+    CloudSyncOutlined,
+    UnorderedListOutlined,
+    HeatMapOutlined,
+    TableOutlined
 } from '@ant-design/icons';
 
 const routes = [
@@ -31,12 +35,19 @@ const routes = [
         icon: <TableOutlined />,
         component: Table
     },*/
-    {
+    /*{
         path: '/layout/contract',
         key: '/layout/contract',
         name: "合约业务服务",
         icon: <UnorderedListOutlined />,
         component: Contract
-    },
+    },*/
+    {
+        path: '/layout/cache-manage',
+        key: '/layout/cache-manage',
+        name: "缓存管理",
+        icon: <CloudSyncOutlined />,
+        component: CacheManage
+    }
 ];
 export default routes;
