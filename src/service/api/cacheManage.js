@@ -8,3 +8,11 @@ export function cacheListUrl(params) {
         data: params,
     });
 }
+// 更新数据状态
+export function refreshListUrl(params) {
+    return request({
+        url: 'pontos/cacheInterfaceConfig/refresh',
+        method: 'post',
+        data: params,
+    });
+}

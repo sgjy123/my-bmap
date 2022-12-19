@@ -7,16 +7,20 @@ import './index.css';
 import routes from 'routes/home';
 // 导入css浏览器reset
 import "normalize.css";
+import zhCN from 'antd/es/locale/zh_CN';
+import { ConfigProvider } from 'antd';
 
 ReactDOM.render(
-    <Router>
-        <Switch>
-            {
-                routes.map((route) => {
-                    return route.redirect ? <Redirect {...route}/> : <Route {...route}/>
-                })
-            }
-        </Switch>
-    </Router>,
+    <ConfigProvider locale={zhCN}>
+        <Router>
+            <Switch>
+                {
+                    routes.map((route) => {
+                        return route.redirect ? <Redirect {...route}/> : <Route {...route}/>
+                    })
+                }
+            </Switch>
+        </Router>
+    </ConfigProvider>,
     document.getElementById('root')
 );

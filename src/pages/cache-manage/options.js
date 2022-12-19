@@ -2,51 +2,51 @@ import React from "react";
 
 const columnsOpt = [
     {
-        title: '合同名称',
-        key: 'contract_name',
-        dataIndex: 'contract_name',
-        width: 250,
+        title: '业务接口路径',
+        key: 'requestPath',
+        dataIndex: 'requestPath',
         align: 'center',
         ellipsis: true
     },
     {
-        title: '合同编号',
-        key: 'contract_code',
-        dataIndex: 'contract_code',
-        width: 200,
+        title: '缓存接口请求方式',
+        key: 'requestMethod',
+        dataIndex: 'requestMethod',
         align: 'center',
         ellipsis: true
     },
     {
-        title: '甲方单位名称',
-        key: 'unit_name',
-        dataIndex: 'unit_name',
-        width: 200,
+        title: '有效时间（单位：秒）',
+        key: 'cacheTimeout',
+        dataIndex: 'cacheTimeout',
         align: 'center',
-        ellipsis: true
+        ellipsis: true,
+        sorter: true,
+        sortDirections: ['ascend']
     },
     {
-        title: '甲方联系人姓名',
-        key: 'contacts_name',
-        dataIndex: 'contacts_name',
+        title: '最新一次刷新缓存时间',
+        key: 'cacheLatestTime',
+        dataIndex: 'cacheLatestTime',
+        align: 'center',
+        ellipsis: true,
+        sorter: true,
+        sortDirections: ['ascend']
+    },
+    {
+        title: '状态',
+        key: 'status',
+        dataIndex: 'status',
         width: 100,
         align: 'center',
-        ellipsis: true
-    },
-    {
-        title: '项目编号',
-        key: 'project_code',
-        dataIndex: 'project_code',
-        width: 120,
-        align: 'center',
-        ellipsis: true
-    },
-    {
-        title: '项目名称',
-        key: 'project_name',
-        dataIndex: 'project_name',
-        align: 'center',
-        ellipsis: true
+        ellipsis: true,
+        render: (txt) => (
+            <div>
+                {
+                    txt === 1 ? '有效' : '无效'
+                }
+            </div>
+        )
     }
 ]
 export {
