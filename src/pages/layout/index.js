@@ -106,7 +106,8 @@ function ALayout(props) {
                     className="site-layout-background"
                     style={{
                         margin: '15px',
-                        minHeight: 280,
+                        height: 'calc(100% - 65px)',
+                        minHeight: 300
                     }}>
                     <Switch>
                         {

@@ -5,6 +5,7 @@
  */
 .layout {
     min-height: 100vh !important;
+    height: 100%;
 }
 
 .layout .logo {
@@ -35,6 +36,10 @@
 .layout .logo .txt {
     font-weight: 500;
     font-size: 16px;
+}
+
+.layout .site-layout {
+    height: 100%;
 }
 
 .layout .site-layout .site-layout-background {

@@ -6,7 +6,7 @@ import {
 } from 'service/api/cacheManage';
 const { TextArea } = Input;
 const EditInfo = (props) => {
-    const {formData = {}} = props;
+    const {formData = {}, getCacheList, setVisible, setVisibleEdit} = props;
     const [loading, setLoading] = useState(false);
     // 表单对象
     const [form] = Form.useForm();
@@ -22,6 +22,9 @@ const EditInfo = (props) => {
         }).then((res)=>{
             const {code, errorDesc, data} = res;
             if (code === 200) {
+                getCacheList();
+                setVisible(false);
+                setVisibleEdit(false);
                 message.success('成功');
             } else {
                 message.error(errorDesc);
@@ -30,11 +33,25 @@ const EditInfo = (props) => {
     }
     const isValidJSON = (string) => {
         try {
-            JSON.parse(string);
+            JSON.stringify(string);
         } catch (e) {
             return false;
         }
         return true;
+    }
+    function isJSON(str) {
+        if (typeof str == 'string') {
+            try {
+                const obj = JSON.parse(str);
+                if(typeof obj == 'object' && obj ){
+                    return true;
+                }else{
+                    return false;
+                }
+            } catch(e) {
+                return false;
+            }
+        }
     }
     return (
         <Form
@@ -70,13 +87,13 @@ const EditInfo = (props) => {
                     },
                     {
                         validator: async (rule, value) => {
-                            if (isValidJSON(value)) {
+                            if (!isJSON(value)) {
                                 throw new Error('格式有误!');
                             }
                         }
                     }
                 ]}
-                extra="必须是json字符串格式"
+                extra="必须是json格式"
             >
                 <TextArea autoSize placeholder="请输入接口请求参数" allowClear/>
             </Form.Item>
@@ -140,5 +157,6 @@ EditInfo.propTypes = {
     formData: PropTypes.object, // 表单数据，只有在编辑是才有，新增为空对象
     setVisible: PropTypes.func, // 关闭抽屉方法
     setVisibleEdit: PropTypes.func, // 关闭自己的方法
+    getCacheList: PropTypes.func, // 更新数据
 };
 export default EditInfo;

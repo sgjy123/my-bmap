@@ -3,7 +3,11 @@
  * @author: 上官靖宇
  * @date: 2022/2/26 21:05
  */
+.contract {
+    height: 100%;
+}
 .contract .contract-search {
+    height: 50px;
     margin: 10px;
     padding-bottom: 10px;
     border-bottom: 1px solid #ddd;
@@ -11,12 +15,18 @@
 .contract .contract-search .contract-search-btn {
     text-align: right;
 }
-
 .contract .contract-table {
+    height: calc(100% - 150px);
+    overflow: hidden;
     margin: 10px;
     padding-top: 15px;
 }
+.contract .contract-table .contract-table-content {
+    height: calc(100% - 35px);
+    overflow-y: auto;
+}
 .contract .contract-page {
+    height: 50px;
     margin: 10px;
     padding-top: 15px;
 }

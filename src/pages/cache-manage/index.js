@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import './index.css';
-import {Button, ConfigProvider, Form, Input, message, Pagination, Table, Modal, Space, Drawer} from "antd";
-import {SearchOutlined, PlusOutlined, RetweetOutlined} from "@ant-design/icons";
+import {Button, ConfigProvider, Form, Input, message, Pagination, Table, Modal, Space, Drawer, Tooltip} from "antd";
+import {SearchOutlined, PlusOutlined, RetweetOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import zh_CN from "antd/es/locale/zh_CN";
 import {columnsOpt} from "./options";
 import EditInfo from './components/EditInfo';
@@ -13,8 +13,9 @@ import {
 const { confirm } = Modal;
 
 function CacheManage() {
+    const tableRef = useRef();
     const [searchParam, setSearchParam] = useState({
-        "currentPage": 2,
+        "currentPage": 1,
         "pageSize": 10,
         "orderColumn": '',
         "orderAsc": ''
@@ -33,49 +34,14 @@ function CacheManage() {
                     <Button type='primary' size="small"
                             onClick={()=>{lookDetail(record)}}>查看详情</Button>
                     <Button type='primary' size="small"
-                            onClick={()=>{changeStatus(record)}}>更新状态</Button>
+                            onClick={()=>{changeStatus(record)}}>刷新缓存</Button>
                     <Button type='primary' size="small"
                             onClick={()=>{editInfo(record)}}>编辑信息</Button>
                 </Space>
             )
         },
     ]);
-    const [formData, setFormData] = useState([
-        /*{
-            cacheKey: "cacheSlowQuery:/evh/org_v6/listOrganizationsByComponent:24,all,27830218,3",
-            cacheLatestTime: "2022-12-16T14:20:54",
-            cacheTimeout: 660,
-            createTime: "2022-12-06T16:39:55",
-            id: '1',
-            requestMethod: "POST",
-            requestParam: "{\"namespaceId\":27830218,\"organizationId\":3,\"componentType\":\"all\",\"appId\":24}",
-            requestPath: "/evh/org_v6/listOrganizationsByComponent",
-            status: 1,
-            updateTime: "2022-12-06T16:39:55",
-        },{
-            cacheKey: "cacheSlowQuery:/evh/org_v6/listOrganizationsByComponent:24,all,27830218,3",
-            cacheLatestTime: "2022-12-16T14:20:54",
-            cacheTimeout: 660,
-            createTime: "2022-12-06T16:39:55",
-            id: '2',
-            requestMethod: "POST",
-            requestParam: "{\"namespaceId\":27830218,\"organizationId\":3,\"componentType\":\"all\",\"appId\":24}",
-            requestPath: "/evh/org_v6/listOrganizationsByComponent",
-            status: 1,
-            updateTime: "2022-12-06T16:39:55",
-        },{
-            cacheKey: "cacheSlowQuery:/evh/org_v6/listOrganizationsByComponent:24,all,27830218,3",
-            cacheLatestTime: "2022-12-16T14:20:54",
-            cacheTimeout: 660,
-            createTime: "2022-12-06T16:39:55",
-            id: '3',
-            requestMethod: "GET",
-            requestParam: "{\"namespaceId\":27830218,\"organizationId\":3,\"componentType\":\"all\",\"appId\":24}",
-            requestPath: "/evh/org_v6/listOrganizationsByComponent",
-            status: 0,
-            updateTime: "2022-12-06T16:39:55",
-        }*/
-    ]);
+    const [formData, setFormData] = useState([]);
     const [visible, setVisible] = useState(false);
     const [visibleEdit, setVisibleEdit] = useState(false);
     const [visibleDetail, setVisibleDetail] = useState(false);
@@ -140,6 +106,10 @@ function CacheManage() {
         });
     };
     const changeStatuses = () =>{
+        if (rowKeys && rowKeys.length <= 0) {
+            message.info('请至少选择一条要操作的数据！');
+            return false;
+        }
         confirm({
             title: '提示',
             content: '您确定要更新选中的信息的状态吗？',
@@ -155,7 +125,18 @@ function CacheManage() {
         refreshListUrl({
             ids: Array.isArray(id) ? id : [id]
         }).then((res)=>{
-            console.log(res);
+            const {code} = res;
+            if (code === 200) {
+                // 重置选中行
+                if (Array.isArray(id)) {
+                    setRowKeys([]);
+                }
+                // 刷新列表
+                getCacheList();
+                message.success('刷新缓存成功！');
+            } else {
+                message.error('刷新缓存失败！');
+            }
         });
     };
     const onChangeTable = (pagination, filters, sorter, extra) => {
@@ -205,6 +186,7 @@ function CacheManage() {
         // 显示抽屉
         setVisibleEdit(true);
     }
+
     return (
         <div className="contract">
             <div className="contract-search">
@@ -229,27 +211,36 @@ function CacheManage() {
                             <Button type="primary"
                                     icon={<RetweetOutlined />}
                                     onClick={changeStatuses}
-                            >更新状态</Button>
+                            >
+                                批量刷新缓存
+                                <Tooltip placement="topLeft" title="最多选择5条"><QuestionCircleOutlined /></Tooltip>
+                            </Button>
                         </Space>
                     </Form.Item>
                 </Form>
             </div>
-            <div className="contract-table">
-                <Table
-                    rowSelection={{
-                        type: 'checkbox',
-                        hideSelectAll: true,
-                        selectedRowKeys: rowKeys,
-                        onChange: (selectedRowKeys, selectedRows)=>{
-                            rowSelection(selectedRowKeys, selectedRows);
-                        }
-                    }}
-                    rowKey='id'
-                    loading={loading}
-                    onChange={onChangeTable}
-                    columns={columns}
-                    dataSource={formData}
-                    pagination={false}/>
+            <div className="contract-table" ref={tableRef}>
+                <div className="contract-table-content">
+                    <Table
+                        scroll={{
+                            x: true
+                        }}
+                        sticky
+                        rowSelection={{
+                            type: 'checkbox',
+                            hideSelectAll: true,
+                            selectedRowKeys: rowKeys,
+                            onChange: (selectedRowKeys, selectedRows)=>{
+                                rowSelection(selectedRowKeys, selectedRows);
+                            }
+                        }}
+                        rowKey='id'
+                        loading={loading}
+                        onChange={onChangeTable}
+                        columns={columns}
+                        dataSource={formData}
+                        pagination={false}/>
+                </div>
             </div>
             <div className="contract-page">
                 <ConfigProvider locale={zh_CN}>
@@ -277,6 +268,7 @@ function CacheManage() {
                         /*表单组件*/
                         <EditInfo setVisible={setVisible}
                                   setVisibleEdit={setVisibleEdit}
+                                  getCacheList={getCacheList}
                                   formData={editLineData} />
                     )
                 }
