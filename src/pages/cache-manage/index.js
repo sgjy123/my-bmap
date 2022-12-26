@@ -5,6 +5,7 @@ import {SearchOutlined, PlusOutlined, RetweetOutlined} from "@ant-design/icons";
 import zh_CN from "antd/es/locale/zh_CN";
 import {columnsOpt} from "./options";
 import EditInfo from './components/EditInfo';
+import InfoDetail from './components/InfoDetail';
 import {
     cacheListUrl,
     refreshListUrl
@@ -13,7 +14,7 @@ const { confirm } = Modal;
 
 function CacheManage() {
     const [searchParam, setSearchParam] = useState({
-        "currentPage": 1,
+        "currentPage": 2,
         "pageSize": 10,
         "orderColumn": '',
         "orderAsc": ''
@@ -30,6 +31,8 @@ function CacheManage() {
             render: (text, record) => (
                 <Space>
                     <Button type='primary' size="small"
+                            onClick={()=>{lookDetail(record)}}>查看详情</Button>
+                    <Button type='primary' size="small"
                             onClick={()=>{changeStatus(record)}}>更新状态</Button>
                     <Button type='primary' size="small"
                             onClick={()=>{editInfo(record)}}>编辑信息</Button>
@@ -38,7 +41,7 @@ function CacheManage() {
         },
     ]);
     const [formData, setFormData] = useState([
-        {
+        /*{
             cacheKey: "cacheSlowQuery:/evh/org_v6/listOrganizationsByComponent:24,all,27830218,3",
             cacheLatestTime: "2022-12-16T14:20:54",
             cacheTimeout: 660,
@@ -60,13 +63,30 @@ function CacheManage() {
             requestPath: "/evh/org_v6/listOrganizationsByComponent",
             status: 1,
             updateTime: "2022-12-06T16:39:55",
-        }
+        },{
+            cacheKey: "cacheSlowQuery:/evh/org_v6/listOrganizationsByComponent:24,all,27830218,3",
+            cacheLatestTime: "2022-12-16T14:20:54",
+            cacheTimeout: 660,
+            createTime: "2022-12-06T16:39:55",
+            id: '3',
+            requestMethod: "GET",
+            requestParam: "{\"namespaceId\":27830218,\"organizationId\":3,\"componentType\":\"all\",\"appId\":24}",
+            requestPath: "/evh/org_v6/listOrganizationsByComponent",
+            status: 0,
+            updateTime: "2022-12-06T16:39:55",
+        }*/
     ]);
     const [visible, setVisible] = useState(false);
+    const [visibleEdit, setVisibleEdit] = useState(false);
+    const [visibleDetail, setVisibleDetail] = useState(false);
     // 弹出抽屉title
     const [formTitle, setFormTitle] = useState('');
     // 选中ID
     const [rowKeys, setRowKeys] = useState([]);
+    // 详细信息
+    const [detail, setDetail] = useState({});
+    // 编辑行数据
+    const [editLineData, setEditLineData] = useState({});
     useEffect(() => {
         getCacheList();
     }, [searchParam]);
@@ -148,17 +168,42 @@ function CacheManage() {
         });
     }
     // 编辑信息
-    const editInfo = () => {
+    const editInfo = (data) => {
         // 设置抽屉title
         setFormTitle('编辑信息');
         // 显示抽屉
         setVisible(true);
+        // 显示抽屉
+        setVisibleEdit(true);
+        // 设置编辑数据
+        setEditLineData(data);
     }
     const rowSelection = (selectedRowKeys, selectedRows)=>{
-        if (selectedRowKeys.length > 5) {
+        if (selectedRowKeys.length > 2) {
             message.info('最多选择5个！');
+            selectedRowKeys.pop();
         };
         setRowKeys(selectedRowKeys);
+    }
+    const lookDetail = (data)=>{
+        // 设置抽屉title
+        setFormTitle('详情信息');
+        // 显示抽屉
+        setVisible(true);
+        // 显示抽屉
+        setVisibleDetail(true);
+        // 设置数据
+        setDetail(data);
+    }
+    const addCacheInfo = () => {
+        // 设置空数据
+        setEditLineData({});
+        // 设置抽屉title
+        setFormTitle('新增数据');
+        // 显示抽屉
+        setVisible(true);
+        // 显示抽屉
+        setVisibleEdit(true);
     }
     return (
         <div className="contract">
@@ -179,6 +224,7 @@ function CacheManage() {
                         <Space>
                             <Button type="primary"
                                     icon={<PlusOutlined />}
+                                    onClick={addCacheInfo}
                             >新增</Button>
                             <Button type="primary"
                                     icon={<RetweetOutlined />}
@@ -219,16 +265,29 @@ function CacheManage() {
             <Drawer
                 title={formTitle}
                 visible={visible}
-                onClose={() => setVisible(false)}
+                onClose={() => {
+                    setVisible(false);
+                    setVisibleDetail(false);
+                    setVisibleEdit(false);
+                }}
                 width='478px'
                 placement="right">
                 {
-                    visible && (
+                    (visible && visibleEdit)&& (
                         /*表单组件*/
-                        <EditInfo />
+                        <EditInfo setVisible={setVisible}
+                                  setVisibleEdit={setVisibleEdit}
+                                  formData={editLineData} />
                     )
                 }
-
+                {
+                    (visible && visibleDetail) && (
+                        /*详情组件*/
+                        <InfoDetail detail={detail}
+                                    setVisible={setVisible}
+                                    setVisibleDetail={setVisibleDetail} />
+                    )
+                }
             </Drawer>
         </div>
     )

@@ -16,3 +16,11 @@ export function refreshListUrl(params) {
         data: params,
     });
 }
+// 新增和编辑缓存信息
+export function saveCacheListUrl(params) {
+    return request({
+        url: '/pontos/cacheInterfaceConfig/save',
+        method: 'post',
+        data: params,
+    });
+}

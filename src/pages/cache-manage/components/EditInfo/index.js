@@ -1,16 +1,53 @@
-import { Button, Form, Input, message, Select, Space, Switch } from 'antd';
+import {Button, Form, Input, InputNumber, message, Select, Space, Switch} from 'antd';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import {
+    saveCacheListUrl
+} from 'service/api/cacheManage';
 const { TextArea } = Input;
 const EditInfo = (props) => {
+    const {formData = {}} = props;
+    const [loading, setLoading] = useState(false);
+    // 表单对象
+    const [form] = Form.useForm();
+    const onFinish = (values) => {
+        const {id, cacheTimeout, requestMethod, requestParam, requestPath, status = false} = values;
+        saveCacheListUrl({
+            id,
+            cacheTimeout,
+            requestMethod,
+            requestParam,
+            requestPath,
+            status: status ? 1 : 0
+        }).then((res)=>{
+            const {code, errorDesc, data} = res;
+            if (code === 200) {
+                message.success('成功');
+            } else {
+                message.error(errorDesc);
+            }
+        });
+    }
+    const isValidJSON = (string) => {
+        try {
+            JSON.parse(string);
+        } catch (e) {
+            return false;
+        }
+        return true;
+    }
     return (
         <Form
-            /*form={form}
+            form={form}
             onFinish={onFinish}
-            initialValues={formData}*/
+            initialValues={formData}
             labelCol={{
                 span: 8,
             }}>
+            <Form.Item name="id" noStyle
+            >
+                <Input disabled style={{display: 'none'}} />
+            </Form.Item>
             <Form.Item
                 label="接口路径"
                 name="requestPath"
@@ -31,10 +68,17 @@ const EditInfo = (props) => {
                         required: true,
                         message: '请输入接口请求参数！',
                     },
+                    {
+                        validator: async (rule, value) => {
+                            if (isValidJSON(value)) {
+                                throw new Error('格式有误!');
+                            }
+                        }
+                    }
                 ]}
-                extra="必须是json格式"
+                extra="必须是json字符串格式"
             >
-                <TextArea placeholder="请输入接口请求参数" allowClear/>
+                <TextArea autoSize placeholder="请输入接口请求参数" allowClear/>
             </Form.Item>
             <Form.Item
                 label="接口请求方式"
@@ -45,24 +89,49 @@ const EditInfo = (props) => {
                         message: '请选择接口请求方式！',
                     },
                 ]}
-                extra="必须是json格式"
             >
-
+                <Select
+                    allowClear
+                    options={[
+                        {
+                            value: 'GET',
+                            label: 'GET',
+                        },
+                        {
+                            value: 'POST',
+                            label: 'POST',
+                        },
+                    ]}
+                />
+            </Form.Item>
+            <Form.Item
+                label="有效时间"
+                name="cacheTimeout"
+                extra="（单位：秒）,0代表缓存无限期"
+            >
+                <InputNumber min={0} allowClear />
+            </Form.Item>
+            <Form.Item
+                label="状态"
+                name="status"
+                valuePropName="checked"
+            >
+                <Switch checkedChildren="开启" unCheckedChildren="关闭" />
             </Form.Item>
             <Form.Item wrapperCol={{
                 offset: 8,
                 span: 16,
             }}>
-                {/*<Space>
-                    {
+                <Space>
+                    {/*{
                         showAdd && (
                             <Button type="default" htmlType="button" onClick={() => {
                                 onReset();
                             }}>重置</Button>
                         )
-                    }
+                    }*/}
                     <Button type="primary" htmlType="submit" loading={loading}>提交</Button>
-                </Space>*/}
+                </Space>
             </Form.Item>
         </Form>
     );
@@ -70,5 +139,6 @@ const EditInfo = (props) => {
 EditInfo.propTypes = {
     formData: PropTypes.object, // 表单数据，只有在编辑是才有，新增为空对象
     setVisible: PropTypes.func, // 关闭抽屉方法
+    setVisibleEdit: PropTypes.func, // 关闭自己的方法
 };
 export default EditInfo;

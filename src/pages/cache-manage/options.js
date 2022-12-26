@@ -1,4 +1,5 @@
 import React from "react";
+import {Tooltip} from "antd";
 
 const columnsOpt = [
     {
@@ -6,7 +7,14 @@ const columnsOpt = [
         key: 'requestPath',
         dataIndex: 'requestPath',
         align: 'center',
-        ellipsis: true
+        ellipsis: {
+            showTitle: false,
+        },
+        render: (requestPath) => (
+            <Tooltip placement="topLeft" title={requestPath}>
+                {requestPath}
+            </Tooltip>
+        ),
     },
     {
         title: '缓存接口请求方式',
