@@ -2,7 +2,7 @@ import {Button, Form, Input, InputNumber, message, Select, Space, Switch} from '
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-    saveCacheListUrl
+    saveCacheListOneUrl
 } from 'service/api/cacheManage';
 const { TextArea } = Input;
 const EditInfo = (props) => {
@@ -11,12 +11,11 @@ const EditInfo = (props) => {
     // 表单对象
     const [form] = Form.useForm();
     const onFinish = (values) => {
-        const {id, cacheTimeout, requestMethod, requestParam, requestPath, status = false} = values;
-        saveCacheListUrl({
+        const {id, cacheTimeout, requestMethod, requestPath, status = false} = values;
+        saveCacheListOneUrl({
             id,
             cacheTimeout,
             requestMethod,
-            requestParam,
             requestPath,
             status: status ? 1 : 0
         }).then((res)=>{
@@ -76,26 +75,6 @@ const EditInfo = (props) => {
                 ]}
             >
                 <Input placeholder="请输入接口路径" allowClear/>
-            </Form.Item>
-            <Form.Item
-                label="接口请求参数"
-                name="requestParam"
-                rules={[
-                    {
-                        required: true,
-                        message: '请输入接口请求参数！',
-                    },
-                    {
-                        validator: async (rule, value) => {
-                            if (!isJSON(value)) {
-                                throw new Error('格式有误!');
-                            }
-                        }
-                    }
-                ]}
-                extra="必须是json格式"
-            >
-                <TextArea autoSize placeholder="请输入接口请求参数" allowClear/>
             </Form.Item>
             <Form.Item
                 label="接口请求方式"

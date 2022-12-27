@@ -2,14 +2,14 @@ import React, {useEffect, useRef, useState} from "react";
 import './index.css';
 import {Button, ConfigProvider, Form, Input, message, Pagination, Table, Modal, Space, Drawer, Tooltip} from "antd";
 import {SearchOutlined, PlusOutlined, RetweetOutlined, QuestionCircleOutlined} from "@ant-design/icons";
-import zh_CN from "antd/es/locale/zh_CN";
 import {columnsOpt} from "./options";
 import EditInfo from './components/EditInfo';
 import InfoDetail from './components/InfoDetail';
+import TwoLevel from './components/TwoLevel';
 import {
     cacheListOneUrl,
-    cacheListUrl,
-    refreshListUrl
+    refreshListOneUrl,
+    deleteCacheListOneUrl
 } from 'service/api/cacheManage';
 const { confirm } = Modal;
 
@@ -33,11 +33,15 @@ function CacheManage() {
             render: (text, record) => (
                 <Space>
                     <Button type='primary' size="small"
-                            onClick={()=>{lookDetail(record)}}>查看详情</Button>
+                            // onClick={()=>{lookDetail(record)}}
+                            onClick={()=>{lookTwoPage(record)}}
+                    >详情</Button>
                     <Button type='primary' size="small"
                             onClick={()=>{changeStatus(record)}}>刷新缓存</Button>
                     <Button type='primary' size="small"
-                            onClick={()=>{editInfo(record)}}>编辑信息</Button>
+                            onClick={()=>{editInfo(record)}}>编辑</Button>
+                    <Button type='primary' size="small"
+                            onClick={()=>{deleteInfo(record)}}>删除</Button>
                 </Space>
             )
         },
@@ -54,6 +58,9 @@ function CacheManage() {
     const [detail, setDetail] = useState({});
     // 编辑行数据
     const [editLineData, setEditLineData] = useState({});
+    // 二级页面
+    const [visibleTwoPage, setVisibleTwoPage] = useState(false);
+    const [requestPath, setRequestPath] = useState('');
     useEffect(() => {
         getCacheList();
     }, [searchParam]);
@@ -122,7 +129,7 @@ function CacheManage() {
         });
     }
     const refresh = (id)=>{
-        refreshListUrl({
+        refreshListOneUrl({
             ids: Array.isArray(id) ? id : [id]
         }).then((res)=>{
             const {code} = res;
@@ -160,7 +167,7 @@ function CacheManage() {
         setEditLineData(data);
     }
     const rowSelection = (selectedRowKeys, selectedRows)=>{
-        if (selectedRowKeys.length > 2) {
+        if (selectedRowKeys.length > 5) {
             message.info('最多选择5个！');
             selectedRowKeys.pop();
         };
@@ -186,7 +193,39 @@ function CacheManage() {
         // 显示抽屉
         setVisibleEdit(true);
     }
-
+    // 删除信息
+    const deleteInfo = (data) => {
+        const {id} = data;
+        if (!id) {
+            message.info('删除信息id不存在！');
+        }
+        confirm({
+            title: '提示',
+            content: '您确定要删除此条信息吗？',
+            onOk() {
+                deleteCacheListOneUrl({
+                    id
+                }).then((res)=>{
+                    const {code} = res;
+                    if (code === 200) {
+                        message.success('删除成功');
+                        getCacheList();
+                    } else {
+                        message.info("删除失败")
+                    }
+                })
+            },
+            onCancel() {
+                message.info('取消成功！');
+            },
+        });
+    }
+    // 查看二级页面
+    const lookTwoPage = (data)=> {
+        const {requestPath} = data;
+        setRequestPath(requestPath);
+        setVisibleTwoPage(true);
+    }
     return (
         <div className="contract">
             <div className="contract-search">
@@ -196,7 +235,7 @@ function CacheManage() {
                     <Form.Item name="requestPath" label="请求路径：" style={{
                         marginBottom: '5px'
                     }}>
-                        <Input placeholder="请求路径"/>
+                        <Input placeholder="请求路径" allowClear/>
                     </Form.Item>
                     <Form.Item>
                         <Space>
@@ -207,13 +246,13 @@ function CacheManage() {
                                     icon={<PlusOutlined />}
                                     onClick={addCacheInfo}
                             >新增</Button>
-                            <Button type="primary"
+                            {/*<Button type="primary"
                                     icon={<RetweetOutlined />}
                                     onClick={changeStatuses}
                             >
                                 批量刷新缓存
                                 <Tooltip placement="topLeft" title="最多选择5条"><QuestionCircleOutlined /></Tooltip>
-                            </Button>
+                            </Button>*/}
                         </Space>
                     </Form.Item>
                 </Form>
@@ -225,14 +264,14 @@ function CacheManage() {
                             x: true
                         }}
                         sticky
-                        rowSelection={{
+                        /*rowSelection={{
                             type: 'checkbox',
                             hideSelectAll: true,
                             selectedRowKeys: rowKeys,
                             onChange: (selectedRowKeys, selectedRows)=>{
                                 rowSelection(selectedRowKeys, selectedRows);
                             }
-                        }}
+                        }}*/
                         tableLayout='auto'
                         rowKey='id'
                         loading={loading}
@@ -279,6 +318,9 @@ function CacheManage() {
                     )
                 }
             </Drawer>
+            <TwoLevel visible={visibleTwoPage}
+                      requestPath={requestPath}
+                      onClose={()=>setVisibleTwoPage(false)}/>
         </div>
     )
 }

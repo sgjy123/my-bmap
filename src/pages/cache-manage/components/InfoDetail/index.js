@@ -1,8 +1,26 @@
 import PropTypes from "prop-types";
 import {Descriptions} from "antd";
+import {useEffect, useState} from "react";
+import {detailCacheListTwoUrl} from 'service/api/cacheManage';
 
 const InfoDetail = (props) => {
-    const {detail} = props;
+    const {infoId} = props;
+    const [detail, setDetail] = useState({});
+    useEffect(()=>{
+        getDetail();
+    },[]);
+    const getDetail = ()=> {
+        detailCacheListTwoUrl({
+            id: infoId
+        }).then((res)=>{
+            const {code} = res;
+            if (code === 200) {
+                setDetail(res?.data);
+            } else {
+                setDetail({});
+            }
+        })
+    }
     return (
         <Descriptions title="详情信息" column={1}>
             <Descriptions.Item label="业务主键">{detail.id}</Descriptions.Item>
@@ -15,13 +33,25 @@ const InfoDetail = (props) => {
             <Descriptions.Item label="状态">
                 {detail.status === 1 ? '有效' : '无效'}
             </Descriptions.Item>
+            <Descriptions.Item label="缓存状态">{detail.cacheStatus}</Descriptions.Item>
+            <Descriptions.Item label="缓存值">
+                <div>
+                    {
+                        detail?.cacheValue && (Object.entries(detail?.cacheValue) || []).map((item)=>(
+                            <div>{item[0]}：{item[1]}</div>
+                        ))
+                    }
+                </div>
+            </Descriptions.Item>
+            <Descriptions.Item label="缓存剩余有效时间">{detail.seconds}</Descriptions.Item>
             <Descriptions.Item label="创建时间">{detail.createTime}</Descriptions.Item>
             <Descriptions.Item label="更新时间">{detail.updateTime}</Descriptions.Item>
         </Descriptions>
     )
 }
 InfoDetail.propTypes = {
-    setVisible: PropTypes.func, // 关闭抽屉方法
-    setVisibleDetail: PropTypes.func, // 隐藏自己的方法
+    infoId: PropTypes.string.isRequired, // 查详情id
+    visibleDetail: PropTypes.bool, // 关闭抽屉
+    setVisibleDetail: PropTypes.bool, // 关闭抽屉方法
 };
 export default InfoDetail;
