@@ -109,17 +109,21 @@ function ALayout(props) {
                         height: 'calc(100% - 65px)',
                         minHeight: 300
                     }}>
-                    <Switch>
-                        {
-                            routes.map((route) => {
-                                return route.children ? (
-                                    route.children.map((childRoute) => {
-                                        return (<Route {...childRoute}/>)
+                    <div className="site-layout-content">
+                        <div className="site-layout-content-box">
+                            <Switch>
+                                {
+                                    routes.map((route) => {
+                                        return route.children ? (
+                                            route.children.map((childRoute) => {
+                                                return (<Route {...childRoute}/>)
+                                            })
+                                        ) : (<Route {...route}/>)
                                     })
-                                ) : (<Route {...route}/>)
-                            })
-                        }
-                    </Switch>
+                                }
+                            </Switch>
+                        </div>
+                    </div>
                 </Content>
             </Layout>
         </Layout>

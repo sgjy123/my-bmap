@@ -7,6 +7,7 @@ import {columnsOpt} from "./options";
 import EditInfo from './components/EditInfo';
 import InfoDetail from './components/InfoDetail';
 import {
+    cacheListOneUrl,
     cacheListUrl,
     refreshListUrl
 } from 'service/api/cacheManage';
@@ -18,7 +19,8 @@ function CacheManage() {
         "currentPage": 1,
         "pageSize": 10,
         "orderColumn": '',
-        "orderAsc": ''
+        "orderAsc": '',
+        "requestPath": ''
     });
     const [total, setTotal] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -28,7 +30,6 @@ function CacheManage() {
             fixed: 'right',
             title: '操作',
             align: 'center',
-            width: 500,
             render: (text, record) => (
                 <Space>
                     <Button type='primary' size="small"
@@ -57,7 +58,7 @@ function CacheManage() {
         getCacheList();
     }, [searchParam]);
     const getCacheList = () => {
-        cacheListUrl({
+        cacheListOneUrl({
             ...searchParam
         }).then((res)=>{
             const {data, code, message} = res;
@@ -74,11 +75,10 @@ function CacheManage() {
     }
     const queryTable = (values)=> {
         changeLoading(true);
-        const {contractCode, contractName} = values;
+        const {requestPath} = values;
         setSearchParam({
             ...searchParam,
-            'orderColumn': contractName,
-            'orderAsc': contractCode
+            'requestPath': requestPath,
         });
     }
     const pageNum = (page, pageSize)=>{
@@ -193,17 +193,16 @@ function CacheManage() {
                 <Form name="horizontal_login"
                       layout="inline"
                       onFinish={queryTable}>
-                    {/*<Form.Item name="contractCode" label="合同编号：">
-                        <Input placeholder="请输入合同编号"/>
+                    <Form.Item name="requestPath" label="请求路径：" style={{
+                        marginBottom: '5px'
+                    }}>
+                        <Input placeholder="请求路径"/>
                     </Form.Item>
-                    <Form.Item name="contractName" label="合同名称：">
-                        <Input placeholder="请输入合同名称"/>
-                    </Form.Item>*/}
                     <Form.Item>
-                        {/*<Button type="primary"
-                                icon={<SearchOutlined/>}
-                                htmlType="submit">查询</Button>*/}
                         <Space>
+                            <Button type="primary"
+                                    icon={<SearchOutlined/>}
+                                    htmlType="submit">查询</Button>
                             <Button type="primary"
                                     icon={<PlusOutlined />}
                                     onClick={addCacheInfo}
@@ -234,6 +233,7 @@ function CacheManage() {
                                 rowSelection(selectedRowKeys, selectedRows);
                             }
                         }}
+                        tableLayout='auto'
                         rowKey='id'
                         loading={loading}
                         onChange={onChangeTable}
@@ -241,16 +241,14 @@ function CacheManage() {
                         dataSource={formData}
                         pagination={false}/>
                 </div>
-            </div>
-            <div className="contract-page">
-                <ConfigProvider locale={zh_CN}>
+                <div className="contract-table-page">
                     <Pagination current={searchParam.currentPage}
                                 pageSize={searchParam.pageSize}
                                 total={total}
                                 onChange={pageNum}
                                 showSizeChanger
                                 showQuickJumper/>
-                </ConfigProvider>
+                </div>
             </div>
             {/*抽屉*/}
             <Drawer

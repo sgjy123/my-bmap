@@ -1,5 +1,14 @@
 import request from 'service/request';
 
+// 获取缓存信息-一级列表数据
+export function cacheListOneUrl(params) {
+    return request({
+        url: '/pontos/cacheRequestPathConfig/query',
+        method: 'post',
+        data: params,
+    });
+}
+
 // 获取缓存信息列表数据
 export function cacheListUrl(params) {
     return request({

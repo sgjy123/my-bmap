@@ -21,15 +21,15 @@ const columnsOpt = [
         key: 'requestMethod',
         dataIndex: 'requestMethod',
         align: 'center',
-        ellipsis: true
+        width: 200
     },
     {
         title: '有效时间（单位：秒）',
         key: 'cacheTimeout',
         dataIndex: 'cacheTimeout',
         align: 'center',
-        ellipsis: true,
         sorter: true,
+        width: 300,
         sortDirections: ['ascend']
     },
     {
@@ -37,9 +37,23 @@ const columnsOpt = [
         key: 'cacheLatestTime',
         dataIndex: 'cacheLatestTime',
         align: 'center',
-        ellipsis: true,
         sorter: true,
+        width: 300,
         sortDirections: ['ascend']
+    },
+    {
+        title: '创建时间',
+        key: 'createTime',
+        dataIndex: 'createTime',
+        align: 'center',
+        width: 200,
+    },
+    {
+        title: '更新时间',
+        key: 'updateTime',
+        dataIndex: 'updateTime',
+        align: 'center',
+        width: 200,
     },
     {
         title: '状态',
