@@ -13,6 +13,8 @@ function Login() {
     const [password, setPassword] = useState('');
     const ac = useRef(); // 时钟
     const history = useHistory();
+    const [userTips, setUserTips] = useState(false);
+    const [passTips, setPassTips] = useState(false);
     useEffect(()=>{
         ac.current.run(); // 开启时钟
         /*return ()=>{
@@ -21,8 +23,20 @@ function Login() {
     },[]);
     // 登录
     const onLogin = ()=>{
+        if (username.trim() === '') {
+            setUserTips(true);
+            return false;
+        } else {
+            setUserTips(false);
+        }
+        if (password.trim() === '') {
+            setPassTips(true);
+            return false;
+        } else {
+            setPassTips(false);
+        }
         // 1.请求接口
-        fetch('/pontos/user/login', {
+        fetch(process.env.REACT_APP_BASE_API+'/pontos/user/login', {
             method: 'POST',
             headers: {
                 "Content-type": "application/json",
@@ -43,9 +57,19 @@ function Login() {
         })
     }
     const changeUsername = (e)=> {
+        if (e.target.value.trim() === '') {
+            setUserTips(true);
+        } else {
+            setUserTips(false);
+        }
         setUsername(e.target.value);
     }
     const changePassword = (e)=> {
+        if (e.target.value.trim() === '') {
+            setPassTips(true);
+        } else {
+            setPassTips(false);
+        }
         setPassword(e.target.value);
     }
     return (
@@ -85,15 +109,15 @@ function Login() {
                                type="text"
                                onChange={(e)=>{ changeUsername(e) }} />
                         <label htmlFor="username">用户名</label>
-                        <div className="tooltip">填写您的用户名</div>
+                        <div className={userTips ? 'tooltip show' : 'tooltip hide'}>填写您的用户名</div>
                     </div>
                     <div className='login-content_content-line'>
                         <input className="tip"
                                name="password"
                                type="password"
                                onChange={(e)=>{ changePassword(e) }} />
-                        <label htmlFor="username">密码</label>
-                        <div className="tooltip">填写您的密码</div>
+                        <label htmlFor="password">密码</label>
+                        <div className={passTips ? 'tooltip show' : 'tooltip hide'}>填写您的密码</div>
                     </div>
                 </div>
                 <div className="login-content_footer">

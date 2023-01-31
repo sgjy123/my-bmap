@@ -223,14 +223,25 @@ body {
     width: 200px;
     padding: 14px;
     position: absolute;
-    left: 20%;
     top: 0;
     right: 0;
-    color: #999;
+    color: #ff0000;
     background: white;
     text-align: left;
-    z-index: -1;
     box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
+    transition: all .5s;
+}
+
+.login-content_content .login-content_content-line .tooltip.hide {
+    transition: all .5s;
+    left: 20%;
+    z-index: -1;
+}
+
+.login-content_content .login-content_content-line .tooltip.show {
+    transition: all .5s;
+    left: 120% !important;
+    z-index: 1;
 }
 
 .login-content_content .login-content_content-line .tooltip:after {
