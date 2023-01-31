@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { useHistory } from "react-router-dom";
 import { createFromIconfontCN } from '@ant-design/icons'; // 导入图标
 import AnalogClock from 'r-analog-clock'; // 导入了一个时钟插件
@@ -7,21 +7,46 @@ import {Thor, Arrow} from './svg'; // 导入svg
 import './index.css'; // 导入样式
 import ClockBg from './../../assets/images/login/clock-bg.jpeg'; // 时钟背景图
 import routes from "../../routes/pages";
+import {message} from "antd";
 function Login() {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const ac = useRef(); // 时钟
     const history = useHistory();
     useEffect(()=>{
         ac.current.run(); // 开启时钟
-        return ()=>{
+        /*return ()=>{
             ac.current.stop(); // 关闭时钟
-        }
+        }*/
     },[]);
     // 登录
     const onLogin = ()=>{
         // 1.请求接口
-        // 2.跳转
-        localStorage.setItem('userName', '123789')
-        history.push(routes[0].path);
+        fetch('/pontos/user/login', {
+            method: 'POST',
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                username,
+                password
+            })
+        }).then(res => res.json()).then(data => {
+            const {code} = data;
+            if (code === 200) {
+                // 2.跳转
+                localStorage.setItem('userName', username);
+                history.push(routes[0].path);
+            } else {
+                message.error('登录失败，请检查用户名密码是否正确！')
+            }
+        })
+    }
+    const changeUsername = (e)=> {
+        setUsername(e.target.value);
+    }
+    const changePassword = (e)=> {
+        setPassword(e.target.value);
     }
     return (
         <div className='login'>
@@ -55,12 +80,18 @@ function Login() {
                 </div>
                 <div className='login-content_content'>
                     <div className='login-content_content-line'>
-                        <input className="tip" name="username" type="text" />
+                        <input className="tip"
+                               name="username"
+                               type="text"
+                               onChange={(e)=>{ changeUsername(e) }} />
                         <label htmlFor="username">用户名</label>
                         <div className="tooltip">填写您的用户名</div>
                     </div>
                     <div className='login-content_content-line'>
-                        <input className="tip" name="password" type="password" />
+                        <input className="tip"
+                               name="password"
+                               type="password"
+                               onChange={(e)=>{ changePassword(e) }} />
                         <label htmlFor="username">密码</label>
                         <div className="tooltip">填写您的密码</div>
                     </div>

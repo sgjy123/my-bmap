@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Route, Switch, useHistory, useLocation} from 'react-router-dom';
 // 组件
-import {Avatar, Dropdown, Layout, Menu} from 'antd';
+import {Avatar, Dropdown, Layout, Menu, message} from 'antd';
 import {MenuFoldOutlined, MenuUnfoldOutlined} from '@ant-design/icons';
 // 配置
 import routes from 'routes/pages';
@@ -10,6 +10,8 @@ import './index.css';
 // 资源
 import logo from 'assets/images/menu/menu-logo.png';
 import UserOutlined from "@ant-design/icons/lib/icons/UserOutlined";
+// 接口地址
+import {logOutUrl} from 'service/api/login';
 
 const {Sider, Content, Header} = Layout;
 const {SubMenu} = Menu;
@@ -18,14 +20,14 @@ function ALayout(props) {
     const history = useHistory();
     const [collapsed, setCollapsed] = useState(false);
     const [currentNav, setCurrentNav] = useState(getUrl());
-    const [userName, setUserName] = useState(localStorage.getItem('username'));
+    const [userName, setUserName] = useState(localStorage.getItem('userName'));
     useEffect(()=> {
         if (localStorage.getItem('userName') === '') {
             history.push('/login');
         } else {
-            setUserName(localStorage.getItem('username'));
+            setUserName(localStorage.getItem('userName'));
         }
-    },[localStorage.getItem('username')]);
+    },[localStorage.getItem('userName')]);
 
     function toggle() {
         setCollapsed(!collapsed);
@@ -44,8 +46,16 @@ function ALayout(props) {
     function handleLoginMenu(e) {
         const {key} = e;
         if (key === 'logout') {
-            localStorage.setItem('userName', '');
-            history.push('/login');
+            logOutUrl().then((res)=>{
+                const {code, message: msg} = res;
+                if (code === 200) {
+                    message.success(msg);
+                    history.push('/login');
+                    localStorage.setItem('userName', '');
+                } else {
+                    message.error(msg);
+                }
+            });
         }
     }
 
