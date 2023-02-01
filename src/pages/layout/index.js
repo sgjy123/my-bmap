@@ -20,14 +20,14 @@ function ALayout(props) {
     const history = useHistory();
     const [collapsed, setCollapsed] = useState(false);
     const [currentNav, setCurrentNav] = useState(getUrl());
-    const [userName, setUserName] = useState(localStorage.getItem('userName'));
+    const [userName, setUserName] = useState(localStorage.getItem('USERNAME_CACHE'));
     useEffect(()=> {
-        if (localStorage.getItem('userName') === '') {
+        if (localStorage.getItem('USERNAME_CACHE') === '' || localStorage.getItem('USERNAME_CACHE') === null) {
             history.push('/login');
         } else {
-            setUserName(localStorage.getItem('userName'));
+            setUserName(localStorage.getItem('USERNAME_CACHE'));
         }
-    },[localStorage.getItem('userName')]);
+    },[]);
 
     function toggle() {
         setCollapsed(!collapsed);
@@ -51,7 +51,7 @@ function ALayout(props) {
                 if (code === 200) {
                     message.success(msg);
                     history.push('/login');
-                    localStorage.setItem('userName', '');
+                    localStorage.setItem('USERNAME_CACHE', '');
                 } else {
                     message.error(msg);
                 }

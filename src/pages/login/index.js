@@ -44,7 +44,7 @@ function Login() {
             const {code} = res;
             if (code === 200) {
                 // 2.跳转
-                localStorage.setItem('userName', username);
+                localStorage.setItem('USERNAME_CACHE', username);
                 history.push(routes[0].path);
             } else {
                 message.error('登录失败，请检查用户名密码是否正确！')
