@@ -8,6 +8,7 @@ import './index.css'; // 导入样式
 import ClockBg from './../../assets/images/login/clock-bg.jpeg'; // 时钟背景图
 import routes from "../../routes/pages";
 import {message} from "antd";
+import {loginUrl} from "service/api/login";
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -36,7 +37,21 @@ function Login() {
             setPassTips(false);
         }
         // 1.请求接口
-        fetch(process.env.REACT_APP_BASE_API+'/pontos/user/login', {
+        loginUrl({
+            username,
+            password
+        }).then((res)=>{
+            const {code} = res;
+            if (code === 200) {
+                // 2.跳转
+                localStorage.setItem('userName', username);
+                history.push(routes[0].path);
+            } else {
+                message.error('登录失败，请检查用户名密码是否正确！')
+            }
+        })
+        // 1.请求接口
+        /*fetch(process.env.REACT_APP_BASE_API+'/pontos/user/login', {
             method: 'POST',
             headers: {
                 "Content-type": "application/json",
@@ -54,7 +69,7 @@ function Login() {
             } else {
                 message.error('登录失败，请检查用户名密码是否正确！')
             }
-        })
+        })*/
     }
     const changeUsername = (e)=> {
         if (e.target.value.trim() === '') {

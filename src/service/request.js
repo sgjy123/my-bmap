@@ -4,7 +4,7 @@ import axios from 'axios';
 const service = axios.create({
   baseURL: process.env.REACT_APP_BASE_API,
   headers: {
-    'Content-Type': 'application/json;charset=UTF-8',
+    'Content-Type': 'application/json',
   },
   withCredentials: true,
   timeout: process.env.NODE_ENV === 'production' ? 5000 : 0,

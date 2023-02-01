@@ -68,14 +68,14 @@ function CacheManage() {
         cacheListOneUrl({
             ...searchParam
         }).then((res)=>{
-            const {data, code, message} = res;
+            const {data, code, message:msg} = res;
             if (code === 200) {
                 setFormData(data['records']);
                 setTotal(data['total']);
             } else {
                 setFormData([]);
                 setTotal(0);
-                message.error(message);
+                message.error(msg);
             }
             changeLoading(false);
         })
