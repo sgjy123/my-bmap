@@ -96,6 +96,9 @@
     background-color: #ccc;
     border-radius: 2px;
 }
+.navMenu .ant-dropdown-menu-title-content{
+    text-align: center;
+}
 /*.layout .ant-layout-sider {
     background-color: #14578B;
 }

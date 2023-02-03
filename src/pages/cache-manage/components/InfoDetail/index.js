@@ -1,6 +1,6 @@
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {Descriptions} from "antd";
-import {useEffect, useState} from "react";
 import {detailCacheListTwoUrl} from 'service/api/cacheManage';
 
 const InfoDetail = (props) => {
@@ -37,9 +37,13 @@ const InfoDetail = (props) => {
             <Descriptions.Item label="缓存值">
                 <div>
                     {
-                        detail?.cacheValue && (Object.entries(detail?.cacheValue) || []).map((item)=>(
+                        /*detail?.cacheValue && (Object.entries(detail?.cacheValue) || []).map((item)=>(
                             <div>{item[0]}：{item[1]}</div>
-                        ))
+                        ))*/
+                        detail?.cacheValue && (Object.entries(detail?.cacheValue) || []).map((item)=>{
+                            let dom = <div>{item[0]}：{JSON.stringify(item[1])}</div>
+                            return dom;
+                        })
                     }
                 </div>
             </Descriptions.Item>
@@ -50,8 +54,8 @@ const InfoDetail = (props) => {
     )
 }
 InfoDetail.propTypes = {
-    infoId: PropTypes.string.isRequired, // 查详情id
+    infoId: PropTypes.any.isRequired, // 查详情id
     visibleDetail: PropTypes.bool, // 关闭抽屉
-    setVisibleDetail: PropTypes.bool, // 关闭抽屉方法
+    setVisibleDetail: PropTypes.func, // 关闭抽屉方法
 };
 export default InfoDetail;

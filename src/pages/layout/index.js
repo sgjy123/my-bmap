@@ -105,7 +105,7 @@ function ALayout(props) {
                                 <MenuFoldOutlined className="trigger"/>)
                         }
                     </div>
-                    <Dropdown overlay={loginMenu} trigger="hover" placement="bottom">
+                    <Dropdown overlay={loginMenu} trigger="hover" placement="bottom" overlayStyle={{textAlign: 'center'}}>
                         <div className="user">
                             <Avatar style={{backgroundColor: '#87d068'}} icon={<UserOutlined/>}/>
                             <span className='user-name'>{userName}</span>
