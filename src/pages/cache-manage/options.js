@@ -16,13 +16,20 @@ const columnsOpt = [
             </Tooltip>
         ),
     },
-    {
+    /*{
         title: '缓存接口请求方式',
         key: 'requestMethod',
         dataIndex: 'requestMethod',
         align: 'center',
         width: 200
-    },
+    },*/
+    /*{
+        title: '是否判断用户',
+        key: 'requestMethod',
+        dataIndex: 'requestMethod',
+        align: 'center',
+        width: 200
+    },*/
     {
         title: '有效时间（单位：秒）',
         key: 'cacheTimeout',

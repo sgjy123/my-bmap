@@ -13,8 +13,7 @@ const TwoLevel = (props) => {
         "currentPage": 1,
         "pageSize": 10,
         "orderColumn": '',
-        "orderAsc": '',
-        "requestPath": requestPath
+        "orderAsc": ''
     });
     const [total, setTotal] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -51,11 +50,9 @@ const TwoLevel = (props) => {
     const [rowKeys, setRowKeys] = useState([]);
     const [visibleDetail, setVisibleDetail] = useState(false);
     const [infoId, setInfoId] = useState('');
-    useEffect(() => {
-        if (requestPath) {
-            getCacheList();
-        }
-    }, [requestPath, searchParam]);
+    useEffect(()=>{
+        getCacheTwoLevelList();
+    },[searchParam]);
     const changeStatus = (data) => {
         const {id} = data;
         confirm({
@@ -81,7 +78,7 @@ const TwoLevel = (props) => {
                     setRowKeys([]);
                 }
                 // 刷新列表
-                getCacheList();
+                getCacheTwoLevelList();
                 message.success('刷新缓存成功！');
             } else {
                 message.error('刷新缓存失败！');
@@ -91,7 +88,7 @@ const TwoLevel = (props) => {
     const changeLoading = (flag) => {
         setLoading(flag);
     }
-    const getCacheList = () => {
+    const getCacheTwoLevelList = () => {
         cacheListTwoUrl({
             ...searchParam,
             requestPath
@@ -130,7 +127,7 @@ const TwoLevel = (props) => {
         setSearchParam({
             ...searchParam,
             'currentPage': page,
-            'pageSize': pageSize
+            'pageSize': pageSize,
         });
     }
     const changeStatuses = () =>{

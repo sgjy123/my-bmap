@@ -114,6 +114,13 @@ const EditInfo = (props) => {
             >
                 <Switch checkedChildren="开启" unCheckedChildren="关闭" />
             </Form.Item>
+            <Form.Item
+                label="是否判断用户"
+                name="status"
+                valuePropName="checked"
+            >
+                <Switch checkedChildren="是" unCheckedChildren="否" />
+            </Form.Item>
             <Form.Item wrapperCol={{
                 offset: 8,
                 span: 16,

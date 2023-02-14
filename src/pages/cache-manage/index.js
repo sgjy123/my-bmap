@@ -318,9 +318,13 @@ function CacheManage() {
                     )
                 }
             </Drawer>
-            <TwoLevel visible={visibleTwoPage}
-                      requestPath={requestPath}
-                      onClose={()=>setVisibleTwoPage(false)}/>
+            {
+                visibleTwoPage &&
+                <TwoLevel visible={visibleTwoPage}
+                          requestPath={requestPath}
+                          onClose={()=>setVisibleTwoPage(false)}/>
+            }
+
         </div>
     )
 }
