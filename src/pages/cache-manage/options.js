@@ -23,13 +23,20 @@ const columnsOpt = [
         align: 'center',
         width: 200
     },*/
-    /*{
+    {
         title: '是否判断用户',
-        key: 'requestMethod',
-        dataIndex: 'requestMethod',
+        key: 'isIdentifyUser',
+        dataIndex: 'isIdentifyUser',
         align: 'center',
-        width: 200
-    },*/
+        width: 150,
+        render: (txt) => (
+            <div>
+                {
+                    txt === 1 ? '区分' : '不区分'
+                }
+            </div>
+        )
+    },
     {
         title: '有效时间（单位：秒）',
         key: 'cacheTimeout',

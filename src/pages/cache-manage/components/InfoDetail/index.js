@@ -30,9 +30,9 @@ const InfoDetail = (props) => {
             <Descriptions.Item label="缓存key">{detail.cacheKey}</Descriptions.Item>
             <Descriptions.Item label="有效时间 (单位:秒)">{detail.cacheTimeout}</Descriptions.Item>
             <Descriptions.Item label="最新一次刷新缓存时间">{detail.cacheLatestTime}</Descriptions.Item>
-            <Descriptions.Item label="状态">
+            {/*<Descriptions.Item label="状态">
                 {detail.status === 1 ? '有效' : '无效'}
-            </Descriptions.Item>
+            </Descriptions.Item>*/}
             <Descriptions.Item label="缓存状态">{detail.cacheStatus}</Descriptions.Item>
             <Descriptions.Item label="缓存值">
                 <div>

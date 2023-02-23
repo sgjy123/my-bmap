@@ -44,7 +44,7 @@ const columnsOpt = [
         dataIndex: 'seconds',
         align: 'center',
         render: (text, data) => (
-            <div>{data.cacheLatestResult === 1 ? text : ''}</div>
+            <div>{data.cacheLatestResult === 1 ? text : text}</div>
         ),
     },
     {

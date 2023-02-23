@@ -37,6 +37,7 @@ function CacheManage() {
                             onClick={()=>{lookTwoPage(record)}}
                     >详情</Button>
                     <Button type='primary' size="small"
+                            disabled={record.status === 0}
                             onClick={()=>{changeStatus(record)}}>刷新缓存</Button>
                     <Button type='primary' size="small"
                             onClick={()=>{editInfo(record)}}>编辑</Button>

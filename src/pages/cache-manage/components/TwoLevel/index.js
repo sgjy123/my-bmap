@@ -37,7 +37,9 @@ const TwoLevel = (props) => {
             align: 'center',
             render: (text, record) => (
                 <Space>
-                    <Button type='primary' size="small"
+                    <Button type='primary'
+                            size="small"
+                            disabled={record.cacheStatus === '无效'}
                             onClick={() => {
                                 changeStatus(record)
                             }}>刷新缓存</Button>

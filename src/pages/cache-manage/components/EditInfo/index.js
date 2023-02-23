@@ -11,13 +11,14 @@ const EditInfo = (props) => {
     // 表单对象
     const [form] = Form.useForm();
     const onFinish = (values) => {
-        const {id, cacheTimeout, requestMethod, requestPath, status = false} = values;
+        const {id, cacheTimeout, requestMethod, requestPath, status = false, isIdentifyUser = false} = values;
         saveCacheListOneUrl({
             id,
             cacheTimeout,
             requestMethod,
             requestPath,
-            status: status ? 1 : 0
+            status: status ? 1 : 0,
+            isIdentifyUser: isIdentifyUser ? 1 : 0,
         }).then((res)=>{
             const {code, errorDesc, data} = res;
             if (code === 200) {
@@ -29,28 +30,6 @@ const EditInfo = (props) => {
                 message.error(errorDesc);
             }
         });
-    }
-    const isValidJSON = (string) => {
-        try {
-            JSON.stringify(string);
-        } catch (e) {
-            return false;
-        }
-        return true;
-    }
-    function isJSON(str) {
-        if (typeof str == 'string') {
-            try {
-                const obj = JSON.parse(str);
-                if(typeof obj == 'object' && obj ){
-                    return true;
-                }else{
-                    return false;
-                }
-            } catch(e) {
-                return false;
-            }
-        }
     }
     return (
         <Form
@@ -116,7 +95,7 @@ const EditInfo = (props) => {
             </Form.Item>
             <Form.Item
                 label="是否判断用户"
-                name="status"
+                name="isIdentifyUser"
                 valuePropName="checked"
             >
                 <Switch checkedChildren="是" unCheckedChildren="否" />
